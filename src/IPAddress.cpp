@@ -1,17 +1,12 @@
 #include "../include/IPAddress.hpp"
 
-IPAddress::IPAddress(uint8_t modemIP) : modemIP(modemIP), terminalIP(0), Modem(true) {}
+IPAddress::IPAddress(uint8_t modemIP)
+            : modemIP(modemIP), terminalIP(0), Modem(true) {}
 
 IPAddress::IPAddress(uint8_t modemIP, uint8_t terminalIP)
-: modemIP(modemIP), terminalIP(terminalIP), Modem(false) {}
+            : modemIP(modemIP), terminalIP(terminalIP), Modem(false) {}
 
-string IPAddress::toString() const{
-    if (Modem) {
-        return "Modem IP: " + bitset<8>(modemIP).to_string();
-    } else {
-        return "Terminal IP: " + bitset<8>(modemIP).to_string() + "." + bitset<8>(terminalIP).to_string();
-    }
-}
+IPAddress::~IPAddress() = default;
 
 uint8_t IPAddress::getModemIP() const{
     return modemIP;
@@ -23,6 +18,14 @@ uint8_t IPAddress::getTerminalIP() const{
 
 bool IPAddress::isModem() const{
     return Modem;
+}
+
+string IPAddress::toString() const{
+    if (Modem) {
+        return "Modem IP: " + bitset<8>(modemIP).to_string();
+    } else {
+        return "Terminal IP: " + bitset<8>(modemIP).to_string() + "." + bitset<8>(terminalIP).to_string();
+    }
 }
 
 bool IPAddress::operator==(const IPAddress &ip) const{

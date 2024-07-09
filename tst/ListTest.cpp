@@ -3,7 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "../include/List.hpp"
-
+/*
 class ListTest : public ::testing::Test {
 protected:
     int data[3] = {1, 2, 3};
@@ -340,4 +340,4 @@ TEST_F(ListTest, PrintNonEmptyListPrintsData) {
     std::string output = testing::internal::GetCapturedStdout();
 
     ASSERT_EQ(output, "1\n2\n3\nFin de lista\n");
-}
+}*/

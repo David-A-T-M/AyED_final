@@ -1,6 +1,6 @@
 #pragma once
 
-
+/*
 #include <iostream>
 #include "Node.hpp"
 
@@ -305,4 +305,4 @@ void List<T>::printList() const{
     cout << "Fin de lista" << endl;
 }
 
-//TODO: Fix the printList method to work calling toString() method from the data class
+//TODO: Fix the printList method to work calling toString() method from the data class*/

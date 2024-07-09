@@ -2,7 +2,7 @@
 // Created by david on 13/05/24.
 //
 #include "../include/Page.hpp"
-
+/*
 Page::Page(int page_id, int page_length, IPAddress& originIP, IPAddress& destinationIP)
         : page_id(page_id), page_length(page_length), originIP(originIP), destinationIP(destinationIP){
     for (int i = 0; i < page_length; i++){
@@ -39,3 +39,4 @@ void Page::print() const {
 }
 
 
+*/

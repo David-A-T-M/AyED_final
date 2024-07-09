@@ -15,9 +15,10 @@ private:
 public:
     explicit IPAddress(uint8_t);
     IPAddress(uint8_t, uint8_t);
-    string toString() const;
+    ~IPAddress();
     uint8_t getModemIP() const;
     uint8_t getTerminalIP() const;
     bool isModem() const;
+    string toString() const;
     bool operator==(const IPAddress& ip) const;
 };

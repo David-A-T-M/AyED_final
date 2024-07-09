@@ -1,3 +1,6 @@
+//
+// Created by David on 08/07/2024.
+//
 #include "../include/Packet.hpp"
 
 Packet::Packet(int pageID, int pagePosition, int routerPosition, IPAddress& destinationIP)
@@ -25,6 +28,6 @@ string Packet::toString() const {
     return "Packet " + to_string(pagePosition);
 }
 
-bool Packet::operator==(const Packet& someP) const {
-    return pageID == someP.pageID && pagePosition == someP.pagePosition;
+bool Packet::operator==(const Packet& packet) const {
+    return pageID == packet.pageID && pagePosition == packet.pagePosition;
 }

@@ -4,33 +4,33 @@ using namespace std;
 
 template <class T> class Node {
 private:
-    T data;
+    T* data;
     Node* next;
 public:
-    Node();
-    explicit Node(T);
-    Node(T, Node*);
-    ~Node();
-    void setData(T&);
-    void setNext(Node*);
-    T* getData();
-    Node<T>* getNext();
-    bool hasNext();
-    bool operator==(T&) const;
-    string toString() const;
+    Node();                                 // Default Constructor
+    explicit Node(T*);                      // Data Constructor
+    Node(T*, Node*);                        // Data Next Constructor
+    ~Node();                                // Destructor, deletes data
+    void setData(T*);                       // Setter for data
+    void setNext(Node*);                    // Setter for next
+    T* getData() const;                     // Getter for data
+    Node<T>* getNext() const;               // Getter for next
+    bool hasNext();                         // Returns true if next points to another node
+    bool operator==(const Node<T>&) const;  // Overloaded == operator
+    string toString() const;                // Returns a string representation of the data
 };
 
 template <class T>
-Node<T>::Node() : data(), next(nullptr) {
-}
+Node<T>::Node()
+        : data(nullptr), next(nullptr) {}
 
 template <class T>
-Node<T>::Node(T data) :Node(data, nullptr) {
-}
+Node<T>::Node(T* data)
+        : data(data), next(nullptr) {}
 
 template <class T>
-Node<T>::Node(T data, Node* next) : data(data), next(next) {
-}
+Node<T>::Node(T* data, Node* next)
+        : data(data), next(next) {}
 
 template <class T>
 Node<T>::~Node(){
@@ -38,22 +38,22 @@ Node<T>::~Node(){
 }
 
 template <class T>
-void Node<T>::setData(T& newData) {
+void Node<T>::setData(T* newData) {
     this->data = newData;
 }
 
 template <class T>
-void Node<T>::setNext(Node* n) {
-    this->next = n;
+void Node<T>::setNext(Node* newNext) {
+    this->next = newNext;
+}
+
+template<class T>
+T *Node<T>::getData() const {
+    return data;
 }
 
 template <class T>
-T* Node<T>::getData() {
-    return &data;
-}
-
-template <class T>
-Node<T>* Node<T>::getNext() {
+Node<T>* Node<T>::getNext() const {
     return next;
 }
 
@@ -63,12 +63,12 @@ bool Node<T>::hasNext() {
 }
 
 template<class T>
-bool Node<T>::operator==(T& someT) const {
-    return data == someT;
+bool Node<T>::operator==(const Node<T>& node) const {
+    return *data == *node.getData();
 }
 
 template<class T>
 string Node<T>::toString() const {
-    return data.toString();
+    return data->toString();
 }
 

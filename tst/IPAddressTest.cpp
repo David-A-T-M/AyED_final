@@ -3,23 +3,23 @@
 
 class IPAddressTest : public ::testing::Test {
 protected:
-    IPAddress modem1 = IPAddress(170);
-    IPAddress modem2 = IPAddress(0b10101010);
-    IPAddress modem3 = IPAddress(25);
-    IPAddress terminal1 = IPAddress(170, 0b11001100);
-    IPAddress terminal2 = IPAddress(0b10101010, 204);
-    IPAddress terminal3 = IPAddress(0b10101010, 108);
+    IPAddress modem1{170};
+    IPAddress modem2{0b10101010};
+    IPAddress modem3{25};
+    IPAddress terminal1{170, 0b11001100};
+    IPAddress terminal2{0b10101010, 204};
+    IPAddress terminal3{0b10101010, 108};
     void SetUp() override {
     }
 };
 
 TEST_F(IPAddressTest, CreateModemIPAddress) {
-    IPAddress ip(0b10101010);
+    IPAddress ip{0b10101010};
     EXPECT_TRUE(ip.isModem());
 }
 
 TEST_F(IPAddressTest, CreateTerminalIPAddress) {
-    IPAddress ip(0b10101010, 0b11001100);
+    IPAddress ip{0b10101010, 0b11001100};
     EXPECT_FALSE(ip.isModem());
 }
 

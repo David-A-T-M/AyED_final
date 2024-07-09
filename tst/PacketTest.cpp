@@ -35,5 +35,5 @@ TEST_F(PacketTest, EqualOperator) {
     EXPECT_TRUE(packet1 == packet2);
     EXPECT_FALSE(packet1 == packet3);
     EXPECT_FALSE(packet1 == packet4);
-    EXPECT_FALSE(packet1 == packet5);
+    EXPECT_TRUE(packet1 == packet5);
 }

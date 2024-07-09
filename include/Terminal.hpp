@@ -5,7 +5,7 @@
 
 #include "Page.hpp"
 #include "Router.hpp"
-
+/*
 class Terminal {
 private:
     IPAddress ip;
@@ -20,4 +20,4 @@ public:
     void receivePage(Page );
     int getReceivedPages();
     IPAddress getTerminalIp();
-};
+};*/

@@ -7,81 +7,84 @@
 
 class NodeTest : public ::testing::Test {
 protected:
-    IPAddress terminalIP = IPAddress(170, 0b11001100);
-
+    IPAddress terminalIP{170, 0b11001100};
+    Packet* packet0{};
+    Packet* packet1{};
+    Packet* packet2{};
+    Packet* packet3{};
+    Packet* packet4{};
+    Node<Packet>* node1{};
+    Node<Packet>* node2{};
+    Node<Packet>* node3{};
+    Node<Packet>* node4{};
     void SetUp() override {
+        packet1 = new Packet(1, 1, 0, terminalIP);
+        packet2 = new Packet(1, 2, 0, terminalIP);
+        packet3 = new Packet(1, 3, 0, terminalIP);
+        packet4 = new Packet(1, 4, 0, terminalIP);
+        node2 = new Node<Packet>(packet2);
+        node1 = new Node<Packet>(packet1,node2);
+        node3 = new Node<Packet>(packet3);
+        node4 = new Node<Packet>(packet1);
+    }
+    void TearDown() override {
+        delete node1;
+        delete node2;
+        delete node3;
+        node1 = nullptr;
+        node2 = nullptr;
+        node3 = nullptr;
+        packet1 = nullptr;
+        packet2 = nullptr;
+        packet3 = nullptr;
     }
 };
 
-// Constructor Tests
-TEST(NodeTest, DefaultConstructor) {
-    Node<Packet> node();
-    EXPECT_EQ(node.getNext(), nullptr);
-    EXPECT_EQ(*node.getData(), 0);
-}
-
-TEST(NodeTest, DataConstructor) {
-    Node<int> node(5);
-    EXPECT_EQ(*node.getData(), 5);
+// Constructor and getter tests
+TEST_F(NodeTest, DefaultConstructor) {
+    Node<Packet> node{};
+    EXPECT_EQ(node.getData(), nullptr);
     EXPECT_EQ(node.getNext(), nullptr);
 }
 
-TEST(NodeTest, DataNextConstructor) {
-    Node<int> nextNode(10);
-    Node<int> node(5, &nextNode);
-    EXPECT_EQ(*node.getData(), 5);
-    ASSERT_NE(node.getNext(), nullptr);
-    EXPECT_EQ(*node.getNext()->getData(), 10);
+TEST_F(NodeTest, DataConstructor) {
+    Node<Packet> node{packet0};
+    EXPECT_EQ(node.getData(), packet0);
+    EXPECT_EQ(node.getNext(), nullptr);
+}
+
+TEST_F(NodeTest, DataNextConstructor) {
+    ASSERT_EQ(node1->getData(), packet1);
+    ASSERT_NE(node1->getNext(), nullptr);
+    ASSERT_EQ(node1->getNext(), node2);
 }
 
 // Setter Tests
-TEST(NodeTest, SetData) {
-    Node<int> node;
-    int newData = 20;
-    node.setData(newData);
-    EXPECT_EQ(*node.getData(), 20);
+TEST_F(NodeTest, SetData) {
+    EXPECT_EQ(node1->getData(), packet1);
+    node1->setData(packet4);
+    EXPECT_EQ(node1->getData(), packet4);
 }
 
-TEST(NodeTest, SetNext) {
-    Node<int> node1;
-    Node<int> node2;
-    node1.setNext(&node2);
-    EXPECT_EQ(node1.getNext(), &node2);
-}
-
-// Getter Tests
-TEST(NodeTest, GetData) {
-    Node<int> node(5);
-    EXPECT_EQ(*node.getData(), 5);
-}
-
-TEST(NodeTest, GetNext) {
-    Node<int> node1;
-    Node<int> node2;
-    node1.setNext(&node2);
-    EXPECT_EQ(node1.getNext(), &node2);
+TEST_F(NodeTest, SetNext) {
+    EXPECT_EQ(node1->getNext(), node2);
+    node1->setNext(node3);
+    EXPECT_EQ(node1->getNext(), node3);
 }
 
 // HasNext Test
-TEST(NodeTest, HasNext) {
-    Node<int> node1;
-    Node<int> node2;
-    EXPECT_FALSE(node1.hasNext());
-    node1.setNext(&node2);
-    EXPECT_TRUE(node1.hasNext());
+TEST_F(NodeTest, HasNext) {
+    EXPECT_FALSE(node2->hasNext());
+    EXPECT_TRUE(node1->hasNext());
 }
 
 // Operator == Tests
-TEST(NodeTest, OperatorEqual) {
-    Node<int> node(5);
-    int someInt = 5;
-    EXPECT_TRUE(node == someInt);
-    someInt = 10;
-    EXPECT_FALSE(node == someInt);
+TEST_F(NodeTest, OperatorEqual) {
+    EXPECT_TRUE(*node1 == *node4);
+    EXPECT_FALSE(*node1 == *node2);
 }
 
 // toString Test
-TEST(NodeTest, ToString) {
-    Node<int> node(5);
-    EXPECT_EQ(node.toString(), "Node: 5");
+TEST_F(NodeTest, ToString) {
+    EXPECT_EQ(node1->toString(), "Packet 1");
 }
