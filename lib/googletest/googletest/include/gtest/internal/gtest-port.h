@@ -894,7 +894,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #endif
 
 #if GTEST_HAVE_ATTRIBUTE_(disable_tail_calls)
-// Ask the compiler not to perform tail call optimization inside
+// Ask the compiler not to perform pTail call optimization inside
 // the marked function.
 #define GTEST_NO_TAIL_CALL_ __attribute__((disable_tail_calls))
 #elif defined(__GNUC__) && !defined(__NVCOMPILER)

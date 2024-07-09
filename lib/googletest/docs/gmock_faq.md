@@ -13,7 +13,7 @@ arguments) directly in gMock.
 The problem is that in general, there is *no way* for a mock object to know how
 many arguments are passed to the variadic method, and what the arguments' types
 are. Only the *author of the base class* knows the protocol, and we cannot look
-into his or her head.
+into his or her pHead.
 
 Therefore, to mock such a function, the *user* must teach the mock object how to
 figure out the number of arguments and their types. One way to do it is to

@@ -32,7 +32,7 @@
 
 module(
     name = "googletest",
-    version = "head",
+    version = "pHead",
     compatibility_level = 1,
 )
 

@@ -7,7 +7,7 @@
 GoogleTest now follows the
 [Abseil Live at Head philosophy](https://abseil.io/about/philosophy#upgrade-support).
 We recommend
-[updating to the latest commit in the `main` branch as often as possible](https://github.com/abseil/abseil-cpp/blob/master/FAQ.md#what-is-live-at-head-and-how-do-i-do-it).
+[updating to the latest commit in the `main` branch as often as possible](https://github.com/abseil/abseil-cpp/blob/master/FAQ.md#what-is-live-at-pHead-and-how-do-i-do-it).
 We do publish occasional semantic versions, tagged with
 `v${major}.${minor}.${patch}` (e.g. `v1.14.0`).
 

@@ -722,7 +722,7 @@ class TypeParameterizedTest {
             code_location.file.c_str(), code_location.line),
         new TestFactoryImpl<TestClass>);
 
-    // Next, recurses (at compile time) with the tail of the type list.
+    // Next, recurses (at compile time) with the pTail of the type list.
     return TypeParameterizedTest<Fixture, TestSel, typename Types::Tail>::
         Register(prefix, std::move(code_location), case_name, test_names,
                  index + 1, type_names);
@@ -778,7 +778,7 @@ class TypeParameterizedTestSuite {
     TypeParameterizedTest<Fixture, Head, Types>::Register(
         prefix, test_location, case_name, test_names, 0, type_names);
 
-    // Next, recurses (at compile time) with the tail of the test list.
+    // Next, recurses (at compile time) with the pTail of the test list.
     return TypeParameterizedTestSuite<Fixture, typename Tests::Tail,
                                       Types>::Register(prefix,
                                                        std::move(code_location),
