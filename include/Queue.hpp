@@ -1,6 +1,6 @@
 #pragma once
 #include "List.hpp"
-/*
+
 using namespace std;
 
 template <typename T>
@@ -10,8 +10,9 @@ private:
 public:
     Queue();
     ~Queue();
-    void enqueue(T&);
+    void enqueue(T*);
     void dequeue();
+    void printList() const override;
 };
 
 template <class T>
@@ -21,7 +22,7 @@ template <class T>
 Queue<T>::~Queue() = default;
 
 template <class T>
-void Queue<T>::enqueue(T& data) {
+void Queue<T>::enqueue(T *data) {
     this->pushBack(data);
 }
 
@@ -33,4 +34,18 @@ void Queue<T>::dequeue() {
     }
     this->popFront();
 }
-*/
+
+template <typename T>
+void Queue<T>::printList() const {
+    cout << "Inicio de cola" << endl;
+    Node<T> *aux = this->getHead();
+
+    while (aux) {
+        if (aux->getData() != nullptr) {
+            cout << aux->getData()->toString() << endl;
+        }
+        aux = aux->getNext();
+    }
+
+    cout << "Fin de cola" << endl;
+}

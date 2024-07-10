@@ -10,7 +10,11 @@ protected:
     IPAddress ip{170, 0b11001100};
     List<Packet> *pEmptyList{}, *pListWith1{}, *pListWith3{};
     Packet *packet0{}, *packet1{}, *packet2{}, *packet3{}, *packet4{};
-    //Node<Packet> *node1{}, *node2{}, *node3{};
+
+public:
+    static Node<Packet>* getHead(List<Packet> *l) {
+        return l->getHead();
+    }
 
     void SetUp() override {
         pEmptyList = new List<Packet>();
@@ -48,6 +52,16 @@ TEST_F(ListTest, ListConstructorCreatesEmptyList) {
     ASSERT_EQ(aNewList.getHeadData(), nullptr);
     ASSERT_EQ(aNewList.getTailData(), nullptr);
     ASSERT_EQ(aNewList.getNodeCount(), 0);
+}
+
+// GetHead Tests
+TEST_F(ListTest, GetHeadEmptyListReturnsNullptr) {
+    Node<Packet>* head = ListTest::getHead(pEmptyList);
+    ASSERT_EQ(head, nullptr);
+    Node<Packet>* head1 = ListTest::getHead(pListWith1);
+    ASSERT_EQ(head1->getData(), packet0);
+    Node<Packet>* head2 = ListTest::getHead(pListWith3);
+    ASSERT_EQ(head2->getData(), packet1);
 }
 
 // PushFront Tests
