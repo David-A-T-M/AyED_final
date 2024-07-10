@@ -1,20 +1,21 @@
+//
+// Created by David on 06/07/2024.
+//
 #pragma once
-/*
-#include <vector>
+
 #include "Packet.hpp"
 #include "List.hpp"
-#include "IPAddress.hpp"
 
 using namespace std;
 
 class Page : public List<Packet>{
 private:
-    const int page_id;                    // Page ID originIP+numberOfPageSent
-    const int page_length;                // Page length in packets
-    const IPAddress& originIP;           // Terminal IP
-    const IPAddress& destinationIP;      // Destination terminal IP
+    const int cPageID;                      // Page ID originIP+numberOfPageSent
+    const int cPageLength;                  // Page length in packets
+    const IPAddress& rOriginIP;             // Terminal IP
+    const IPAddress& rDestinationIP;        // Destination terminal IP
 public:
-    Page(int, int, IPAddress& ,IPAddress&);
+    Page(int, int, const IPAddress&, const IPAddress&);
     ~Page();
     int getPageID() const;
     int getPageLength() const;
@@ -22,4 +23,3 @@ public:
     const IPAddress& getDestinationIP() const;
     void print() const;
 };
-*/

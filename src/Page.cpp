@@ -2,41 +2,38 @@
 // Created by david on 13/05/24.
 //
 #include "../include/Page.hpp"
-/*
-Page::Page(int page_id, int page_length, IPAddress& originIP, IPAddress& destinationIP)
-        : page_id(page_id), page_length(page_length), originIP(originIP), destinationIP(destinationIP){
-    for (int i = 0; i < page_length; i++){
-        Packet packet(page_id, i, 0, destinationIP);
-        this->pushBack(packet);
+
+Page::Page(int cPageID, int cPageLength, const IPAddress& rOriginIP, const IPAddress& rDestinationIP)
+        : cPageID(cPageID), cPageLength(cPageLength), rOriginIP(rOriginIP), rDestinationIP(rDestinationIP) {
+    for (int i = 0; i < cPageLength; i++){
+        auto *new_packet =new Packet(cPageID, i, 0, rDestinationIP);
+        this->pushBack(new_packet);
     }
 }
 
 Page::~Page() = default;
 
 int Page::getPageID() const {
-    return page_id;
+    return cPageID;
 }
 
 int Page::getPageLength() const {
-    return page_length;
+    return cPageLength;
 }
 
 const IPAddress& Page::getOriginIP() const{
-    return originIP;
+    return rOriginIP;
 }
 
 const IPAddress& Page::getDestinationIP() const{
-    return destinationIP;
+    return rDestinationIP;
 }
 
 void Page::print() const {
-    cout << "Page ID: " << page_id << endl;
-    for (int i = 0; i < page_length; i++){
-        cout << this->List::getDataAtNode(i)->toString() << endl;
+    cout << "Page ID: " << cPageID << endl;
+    for (int i = 0; i < cPageLength; i++){
+        cout << this->getDataAtNode(i)->toString() << endl;
     }
-    cout << "Page length: " << page_length << endl;
+    cout << "Page length: " << cPageLength << endl;
     cout << endl;
 }
-
-
-*/

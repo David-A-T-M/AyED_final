@@ -8,7 +8,7 @@ void Terminal::sendPage(Page) {
     //TODO: Crear página, incrementar sentPages y llamar al router para que reciba la página
 
     /*
-    Page(int page_id, int page_length, vector<int> originIP, vector<int> destinationIP);
+    Page(int page_id, int page_length, vector<int> originIP, vector<int> cDestinationIP);
     connectedRouter -> receivePage(Page);*/
 /*}
 

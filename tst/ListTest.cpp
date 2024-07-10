@@ -257,12 +257,12 @@ TEST_F(ListTest, PrintEmptyListPrintsNothing) {
     testing::internal::CaptureStdout();
     pEmptyList->printList();
     std::string output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "Inicio de lista\nFin de lista\n");
+    ASSERT_EQ(output, "Start of list\nEnd of list\n");
 }
 
 TEST_F(ListTest, PrintNonEmptyListPrintsData) {
     testing::internal::CaptureStdout();
     pListWith3->printList();
     std::string output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "Inicio de lista\nPacket 1\nPacket 2\nPacket 3\nFin de lista\n");
+    ASSERT_EQ(output, "Start of list\nPacket 1\nPacket 2\nPacket 3\nEnd of list\n");
 }

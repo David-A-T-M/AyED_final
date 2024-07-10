@@ -3,17 +3,17 @@
 //
 #include "../include/Packet.hpp"
 
-Packet::Packet(int pageID, int pagePosition, int routerPosition, IPAddress& destinationIP)
-        : pageID(pageID), pagePosition(pagePosition), routerPosition(routerPosition), destinationIP(destinationIP) {}
+Packet::Packet(int pageID, int pagePosition, int routerPosition, const IPAddress& destinationIP)
+        : cPageID(pageID), cPagePosition(pagePosition), routerPosition(routerPosition), rDestinationIP(destinationIP) {}
 
 Packet::~Packet() = default;
 
 int Packet::getPageID() const {
-    return pageID;
+    return cPageID;
 }
 
 int Packet::getPagePosition() const {
-    return pagePosition;
+    return cPagePosition;
 }
 
 int Packet::getRouterPosition() const {
@@ -21,13 +21,13 @@ int Packet::getRouterPosition() const {
 }
 
 const IPAddress& Packet::getDestinationIP() const {
-    return destinationIP;
+    return rDestinationIP;
 }
 
 string Packet::toString() const {
-    return "Packet " + to_string(pagePosition);
+    return "Packet " + to_string(cPagePosition);
 }
 
 bool Packet::operator==(const Packet& packet) const {
-    return pageID == packet.pageID && pagePosition == packet.pagePosition;
+    return cPageID == packet.cPageID && cPagePosition == packet.cPagePosition;
 }

@@ -3,19 +3,16 @@
 //
 #include "gtest/gtest.h"
 #include "../include/Page.hpp"
-/*
+
 class PageTest : public ::testing::Test {
 protected:
-    IPAddress terminal1IP = IPAddress(170, 0b11001100);
-    IPAddress terminal2IP = IPAddress(180, 0b11001101);
-    Page* page{};
-
+    IPAddress originIP{170, 0b11001100};
+    IPAddress destinationIP{160, 0b11001101};
+    Page *page = new Page(1, 5, originIP, destinationIP);
     void SetUp() override {
-        page = new Page(1, 5, terminal1IP, terminal2IP);
     }
 
     void TearDown() override {
-        delete page;
     }
 };
 
@@ -23,8 +20,8 @@ protected:
 TEST_F(PageTest, PageCreation) {
     EXPECT_EQ(page->getPageID(), 1);
     EXPECT_EQ(page->getPageLength(), 5);
-    EXPECT_EQ(page->getOriginIP(), terminal1IP);
-    EXPECT_EQ(page->getDestinationIP(), terminal2IP);
+    EXPECT_EQ(page->getOriginIP(), originIP);
+    EXPECT_EQ(page->getDestinationIP(), destinationIP);
 }
 
 // Print test
@@ -40,4 +37,4 @@ TEST_F(PageTest, Print) {
                                  "Packet 4\n"
                                  "Page length: 5\n\n";
     EXPECT_EQ(output, expectedOutput);
-}*/
+}
