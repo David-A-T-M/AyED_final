@@ -12,8 +12,7 @@ add_executable(RunTests test_main.cpp
         PacketTest.cpp
         RouterTest.cpp
         NetworkTest.cpp
-        AdjNodeTest.cpp
-        AdjacencyListTest.cpp)
+        AdjNodeTest.cpp)
 
 # Link the Google Test libraries
 target_link_libraries(RunTests gtest gtest_main AyEdD_Routers_ObjLib)
