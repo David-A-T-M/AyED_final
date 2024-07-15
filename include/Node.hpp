@@ -1,14 +1,21 @@
+/*
+ * Node class to be used in a linked list, stack or queue;
+ * it contains a pointer to data and a pointer to the next node
+ */
 #pragma once
 
 #include <string>
 
 using namespace std;
 
-template <class T> class Node {
+template <typename T>
+class Node {
 private:
     T* data;
     Node* next;
 public:
+    using valType = T;
+
     Node();                                 // Default Constructor
     explicit Node(T*);                      // Data Constructor
     Node(T*, Node*);                        // Data Next Constructor
@@ -22,52 +29,52 @@ public:
     string toString() const;                // Returns a string representation of the data
 };
 
-template <class T>
+template <typename T>
 Node<T>::Node()
         : data(nullptr), next(nullptr) {}
 
-template <class T>
+template <typename T>
 Node<T>::Node(T* data)
         : data(data), next(nullptr) {}
 
-template <class T>
+template <typename T>
 Node<T>::Node(T* data, Node* next)
         : data(data), next(next) {}
 
-template <class T>
+template <typename T>
 Node<T>::~Node() = default;
 
-template <class T>
+template <typename T>
 void Node<T>::setData(T* newData) {
     this->data = newData;
 }
 
-template <class T>
+template <typename T>
 void Node<T>::setNext(Node* newNext) {
     this->next = newNext;
 }
 
-template<class T>
+template<typename T>
 T *Node<T>::getData() const {
     return data;
 }
 
-template <class T>
+template <typename T>
 Node<T>* Node<T>::getNext() const {
     return next;
 }
 
-template <class T>
+template <typename T>
 bool Node<T>::hasNext() {
     return next != nullptr;
 }
 
-template<class T>
+template<typename T>
 bool Node<T>::operator==(const Node<T>& node) const {
     return *data == *node.getData();
 }
 
-template<class T>
+template<typename T>
 string Node<T>::toString() const {
     return data->toString();
 }
