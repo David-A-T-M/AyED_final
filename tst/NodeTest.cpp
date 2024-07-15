@@ -8,35 +8,32 @@
 class NodeTest : public ::testing::Test {
 protected:
     IPAddress terminalIP{170, 0b11001100};
-    Packet* packet0{};
-    Packet* packet1{};
-    Packet* packet2{};
-    Packet* packet3{};
-    Packet* packet4{};
-    Node<Packet>* node1{};
-    Node<Packet>* node2{};
-    Node<Packet>* node3{};
-    Node<Packet>* node4{};
+    Packet *packet0{}, *packet1{}, *packet2{};
+    Node<Packet> *node0{}, *node1{}, *node2{}, *node3{};
     void SetUp() override {
-        packet1 = new Packet(1, 1, 0, terminalIP);
-        packet2 = new Packet(1, 2, 0, terminalIP);
-        packet3 = new Packet(1, 3, 0, terminalIP);
-        packet4 = new Packet(1, 4, 0, terminalIP);
+        packet0 = new Packet(1, 1, 0, terminalIP);
+        packet1 = new Packet(1, 2, 0, terminalIP);
+        packet2 = new Packet(1, 3, 0, terminalIP);
+        node1 = new Node<Packet>(packet1);
+        node0 = new Node<Packet>(packet0, node1);
         node2 = new Node<Packet>(packet2);
-        node1 = new Node<Packet>(packet1,node2);
-        node3 = new Node<Packet>(packet3);
-        node4 = new Node<Packet>(packet1);
+        node3 = new Node<Packet>(packet0);
     }
     void TearDown() override {
+        delete node0;
         delete node1;
         delete node2;
         delete node3;
+        node0 = nullptr;
         node1 = nullptr;
         node2 = nullptr;
         node3 = nullptr;
+        delete packet0;
+        delete packet1;
+        delete packet2;
+        packet0 = nullptr;
         packet1 = nullptr;
         packet2 = nullptr;
-        packet3 = nullptr;
     }
 };
 
@@ -54,37 +51,37 @@ TEST_F(NodeTest, DataConstructor) {
 }
 
 TEST_F(NodeTest, DataNextConstructor) {
-    ASSERT_EQ(node1->getData(), packet1);
-    ASSERT_NE(node1->getNext(), nullptr);
-    ASSERT_EQ(node1->getNext(), node2);
+    ASSERT_EQ(node0->getData(), packet0);
+    ASSERT_NE(node0->getNext(), nullptr);
+    ASSERT_EQ(node0->getNext(), node1);
 }
 
 // Setter Tests
 TEST_F(NodeTest, SetData) {
-    EXPECT_EQ(node1->getData(), packet1);
-    node1->setData(packet4);
-    EXPECT_EQ(node1->getData(), packet4);
+    EXPECT_EQ(node0->getData(), packet0);
+    node0->setData(packet1);
+    EXPECT_EQ(node0->getData(), packet1);
 }
 
 TEST_F(NodeTest, SetNext) {
-    EXPECT_EQ(node1->getNext(), node2);
-    node1->setNext(node3);
-    EXPECT_EQ(node1->getNext(), node3);
+    EXPECT_EQ(node0->getNext(), node1);
+    node0->setNext(node2);
+    EXPECT_EQ(node0->getNext(), node2);
 }
 
 // HasNext Test
 TEST_F(NodeTest, HasNext) {
-    EXPECT_FALSE(node2->hasNext());
-    EXPECT_TRUE(node1->hasNext());
+    EXPECT_FALSE(node1->hasNext());
+    EXPECT_TRUE(node0->hasNext());
 }
 
 // Operator == Tests
 TEST_F(NodeTest, OperatorEqual) {
-    EXPECT_TRUE(*node1 == *node4);
-    EXPECT_FALSE(*node1 == *node2);
+    EXPECT_TRUE(*node0 == *node3);
+    EXPECT_FALSE(*node0 == *node1);
 }
 
 // toString Test
 TEST_F(NodeTest, ToString) {
-    EXPECT_EQ(node1->toString(), "Packet 1");
+    EXPECT_EQ(node0->toString(), "Packet 1");
 }

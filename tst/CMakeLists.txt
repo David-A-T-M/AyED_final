@@ -9,7 +9,11 @@ add_executable(RunTests test_main.cpp
         PageTest.cpp
         IPAddressTest.cpp
         TerminalTest.cpp
-        PacketTest.cpp)
+        PacketTest.cpp
+        RouterTest.cpp
+        NetworkTest.cpp
+        AdjacencyNodeTest.cpp
+        AdjacencyListTest.cpp)
 
 # Link the Google Test libraries
 target_link_libraries(RunTests gtest gtest_main AyEdD_Routers_ObjLib)

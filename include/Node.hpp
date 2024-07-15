@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 using namespace std;
 
 template <class T> class Node {
@@ -33,9 +35,7 @@ Node<T>::Node(T* data, Node* next)
         : data(data), next(next) {}
 
 template <class T>
-Node<T>::~Node(){
-    delete data;
-}
+Node<T>::~Node() = default;
 
 template <class T>
 void Node<T>::setData(T* newData) {

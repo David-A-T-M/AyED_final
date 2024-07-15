@@ -6,6 +6,9 @@ add_library(AyEdD_Routers_ObjLib OBJECT
         Page.cpp
     Packet.cpp
         IPAddress.cpp
+        Network.cpp
+        AdjacencyList.cpp
+        AdjacencyNode.cpp
 )
 
 # Specify include directories for the OBJECT library
@@ -13,4 +16,8 @@ target_include_directories(AyEdD_Routers_ObjLib PUBLIC ../include)
 
 # Create the executable using the OBJECT library
 add_executable(AyEdD_Routers $<TARGET_OBJECTS:AyEdD_Routers_ObjLib>
-        ../include/IPAddress.hpp)
+        ../include/IPAddress.hpp
+        ../include/Network.hpp
+        ../include/AdjacencyList.hpp
+        ../include/AdjacencyNode.hpp
+)
