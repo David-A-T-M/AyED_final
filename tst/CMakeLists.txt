@@ -12,7 +12,7 @@ add_executable(RunTests test_main.cpp
         PacketTest.cpp
         RouterTest.cpp
         NetworkTest.cpp
-        AdjacencyNodeTest.cpp
+        AdjNodeTest.cpp
         AdjacencyListTest.cpp)
 
 # Link the Google Test libraries
