@@ -4,23 +4,22 @@
 #include "gtest/gtest.h"
 #include "Queue.hpp"
 #include "Packet.hpp"
+#include "Node.hpp"
 
 class QueueTest : public ::testing::Test {
 protected:
     IPAddress ip{170, 0b10101010};
-    Queue<Packet> *pQueueEmpty{}, *pQueueWith1{}, *pQueueWith3{};
-    Packet *packet0{}, *packet1{}, *packet2{}, *packet3{}, *packet4{}, *packet5{};
+    Queue<Node<Packet>> *pQueueEmpty{}, *pQueueWith1{}, *pQueueWith3{};
+    Packet *packet0{}, *packet1{}, *packet2{}, *packet3{};
 
     void SetUp() override {
-        pQueueEmpty = new Queue<Packet>();
-        pQueueWith1 = new Queue<Packet>();
-        pQueueWith3 = new Queue<Packet>();
+        pQueueEmpty = new Queue<Node<Packet>>();
+        pQueueWith1 = new Queue<Node<Packet>>();
+        pQueueWith3 = new Queue<Node<Packet>>();
         packet0 = new Packet(1, 0, 0, ip);
         packet1 = new Packet(1, 1, 0, ip);
         packet2 = new Packet(1, 2, 0, ip);
         packet3 = new Packet(1, 3, 0, ip);
-        packet4 = new Packet(1, 4, 0, ip);
-        packet5 = new Packet(1, 5, 0, ip);
         pQueueWith1->enqueue(packet0);
         pQueueWith3->enqueue(packet1);
         pQueueWith3->enqueue(packet2);
@@ -34,39 +33,45 @@ protected:
         pQueueEmpty = nullptr;
         pQueueWith1 = nullptr;
         pQueueWith3 = nullptr;
+        delete packet0;
+        delete packet1;
+        delete packet2;
+        delete packet3;
         packet0 = nullptr;
         packet1 = nullptr;
         packet2 = nullptr;
         packet3 = nullptr;
-        packet4 = nullptr;
-        packet5 = nullptr;
     }
 };
 
 TEST_F(QueueTest, IsEmptyInitially) {
     EXPECT_TRUE(pQueueEmpty->isEmpty());
+    EXPECT_EQ(pQueueEmpty->getNodeCount(),0);
 }
 
 // Enqueue Tests
 TEST_F(QueueTest, NotEmptyAfterEnqueue) {
-    pQueueEmpty->enqueue(packet4);
+    pQueueEmpty->enqueue(packet1);
     EXPECT_FALSE(pQueueEmpty->isEmpty());
     EXPECT_EQ(pQueueEmpty->getNodeCount(),1);
 }
 
 TEST_F(QueueTest, EnqueueMultipleElements) {
-    pQueueWith1->enqueue(packet4);
-    pQueueWith1->enqueue(packet5);
-    EXPECT_EQ(pQueueWith1->getDataAtNode(1), packet4);
-    EXPECT_EQ(pQueueWith1->getDataAtNode(2), packet5);
+    pQueueWith1->enqueue(packet2);
+    pQueueWith1->enqueue(packet3);
+    EXPECT_EQ(pQueueWith1->getDataAtNode(1), packet2);
+    EXPECT_EQ(pQueueWith1->getDataAtNode(2), packet3);
     EXPECT_EQ(pQueueWith1->getNodeCount(),3);
 }
 
 // Dequeue Tests
 TEST_F(QueueTest, DequeueEmptyQueue) {
+    testing::internal::CaptureStdout();
     pQueueEmpty->dequeue();
+    std::string output = testing::internal::GetCapturedStdout();
     EXPECT_TRUE(pQueueEmpty->isEmpty());
     EXPECT_EQ(pQueueEmpty->getNodeCount(),0);
+    EXPECT_EQ(output, "Can't dequeue, queue is empty\n");
 }
 
 TEST_F(QueueTest, IsEmptyAfterDequeueLastElement) {

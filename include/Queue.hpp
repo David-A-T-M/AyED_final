@@ -1,33 +1,37 @@
+/*
+ * Class queue, inherits from List and can be used with any type of Node
+ */
 #pragma once
 #include "List.hpp"
 
 using namespace std;
 
-template <typename T>
-class Queue : public List<T> {
+template <typename NodeT>
+class Queue : public List<NodeT> {
 private:
 
 public:
     Queue();
     ~Queue();
-    void enqueue(T*);
+    void enqueue(typename NodeT::valType*);
     void dequeue();
     void printList() const override;
+    string toString() const;
 };
 
-template <class T>
-Queue<T>::Queue() = default;
+template <class NodeT>
+Queue<NodeT>::Queue() = default;
 
-template <class T>
-Queue<T>::~Queue() = default;
+template <class NodeT>
+Queue<NodeT>::~Queue() = default;
 
-template <class T>
-void Queue<T>::enqueue(T *data) {
+template <class NodeT>
+void Queue<NodeT>::enqueue(typename NodeT::valType *data) {
     this->pushBack(data);
 }
 
-template <class T>
-void Queue<T>::dequeue() {
+template <class NodeT>
+void Queue<NodeT>::dequeue() {
     if (this->getNodeCount() == 0){
         cout << "Can't dequeue, queue is empty" << endl;
         return;
@@ -35,10 +39,10 @@ void Queue<T>::dequeue() {
     this->popFront();
 }
 
-template <typename T>
-void Queue<T>::printList() const {
+template <typename NodeT>
+void Queue<NodeT>::printList() const {
     cout << "Inicio de cola" << endl;
-    Node<T> *aux = this->getHead();
+    NodeT *aux = this->getHead();
 
     while (aux) {
         if (aux->getData() != nullptr) {
@@ -48,4 +52,10 @@ void Queue<T>::printList() const {
     }
 
     cout << "Fin de cola" << endl;
+}
+
+template<typename NodeT>
+string Queue<NodeT>::toString() const {
+    return "holi soy una cola";
+    //TODO
 }
