@@ -67,3 +67,10 @@ TEST_F(AdjacencyNodeTest, SetWeight) {
     EXPECT_EQ(node3->getData(), packet1);
     EXPECT_EQ(node3->getNext(), node0);
 }
+
+// Operator == test
+TEST_F(AdjacencyNodeTest, OperatorEqual) {
+    EXPECT_FALSE(*node0 == *node1);
+    node0->setVal(10);
+    EXPECT_TRUE(*node0 == *node1);
+}

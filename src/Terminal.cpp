@@ -1,8 +1,8 @@
 //
 // Created by david on 13/05/24.
 //
-#include "../include/Terminal.hpp"
-#include "../include/Router.hpp"
+#include "Terminal.hpp"
+#include "Router.hpp"
 
 Terminal::Terminal(IPAddress ip, Router* router)
         : ip(ip), connectedRouter(router) {

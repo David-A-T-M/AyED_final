@@ -1,6 +1,8 @@
-/*
- * Adjacency Node class to be used in a linked list, stack or queue;
- * it contains a pointer to data, an int value and a pointer to the next node
+/**
+ * @class AdjNode
+ * @brief Adjacent Node class to be used in a linked list, stack or queue.
+ *        Stores a pointer to the data, an integer value and a pointer to the next node in the structure.
+ * @tparam T Type of the data to be stored in the node.
  */
 #pragma once
 
@@ -10,28 +12,92 @@ using namespace std;
 
 template <typename T>
 class AdjNode {
-    private:
-        T* data;
-        AdjNode* next;
-        int val = 0;
-    public:
-        using valType = T;
+private:
+    T* data;                    /**< Pointer to the data stored in the node. */
+    AdjNode* next;              /**< Pointer to the next node in the structure. */
+    int val = 0;                /**< Integer stored in the node. */
+public:
+    using valType = T;
 
-        AdjNode();                              // Default Constructor
-        explicit AdjNode(T*);                   // Constructor with data
-        AdjNode(T*, int);                       // Constructor with data and value
-        AdjNode(T*, AdjNode*);                  // Constructor with data and next
-        AdjNode(T*, AdjNode*, int);             // Constructor with data, next and value
-        ~AdjNode();                             // Default Destructor
-        void setData(T*);                       // Setter for data
-        void setNext(AdjNode*);                 // Setter for next
-        void setVal(int);                       // Setter for value
-        T* getData() const;                     // Getter for data
-        AdjNode<T>* getNext() const;            // Getter for next
-        int getVal() const;                     // Getter for value
-        bool hasNext();                         // Returns true if next points to another node
-        bool operator==(const AdjNode<T>&) const;  // Overloaded == operator
-        string toString() const;                // Returns a string representation of the data
+    /**
+     * @brief Default Constructor. Initializes a new instance of the Node class with *data and *next set to nullptr.
+     */
+    AdjNode();
+    /**
+     * @brief Data Constructor. Initializes a new instance of the Node class with the provided data and a null next pointer.
+     * @param data Pointer to the data to be stored in the node.
+     */
+    explicit AdjNode(T *data);
+    /**
+     * @brief Data Next Constructor. Initializes a new instance of the Node class with the provided data and int value.
+     *        Sets *next to nullptr.
+     * @param data Pointer to the data to be stored in the node.
+     * @param a Integer value to be stored in the node.
+     */
+    AdjNode(T *data, int a);
+    /**
+     * @brief Data Next Constructor. Initializes a new instance of the Node class with the provided data and next node.
+     * @param data Pointer to the data to be stored in the node.
+     * @param next Pointer to the next node in the structure.
+     */
+    AdjNode(T *data, AdjNode *next);
+    /**
+     * @brief Data Next Constructor. Initializes a new instance of the Node class with the provided data, int value and next node.
+     * @param data Pointer to the data to be stored in the node.
+     * @param next Pointer to the next node in the structure.
+     * @param a Integer value to be stored in the node.
+     */
+    AdjNode(T *data, AdjNode *next, int a);
+    /**
+     * @brief Default Destructor.
+     */
+    ~AdjNode();
+    /**
+     * @brief Sets the data of the node.
+     * @param newData Pointer to the new data for the node.
+     */
+    void setData(T *newData);
+    /**
+     * @brief Sets the next node in the structure.
+     * @param newNext Pointer to the new next node.
+     */
+    void setNext(AdjNode *newNext);
+    /**
+     * @brief Sets the integer value of the node.
+     * @param newA Integer value to be stored in the node.
+     */
+    void setVal(int newA);
+    /**
+     * @brief Gets the data stored in the node.
+     * @return Pointer to the node's data.
+     */
+    T* getData() const;
+    /**
+     * @brief Gets the next node in the structure.
+     * @return Pointer to the next node.
+     */
+    AdjNode<T>* getNext() const;
+    /**
+     * @brief Gets the integer value stored in the node.
+     * @return Integer value stored in the node.
+     */
+    int getVal() const;
+    /**
+     * @brief Checks if there is a next node.
+     * @return True if there is a next node, false otherwise.
+     */
+    bool hasNext();
+    /**
+     * @brief Compares the data and integer value of two nodes.
+     * @param node Node to compare data and integer value with.
+     * @return True if the data and integer value are equal, false otherwise.
+     */
+    bool operator==(const AdjNode<T>&) const;
+    /**
+     * @brief Returns a string representation of the node's data.
+     * @return String representing the node's data.
+     */
+    string toString() const;
 };
 
 template <typename T>
@@ -94,7 +160,7 @@ bool AdjNode<T>::hasNext() {
 
 template<typename T>
 bool AdjNode<T>::operator==(const AdjNode<T>& node) const {
-    return *data == *node.getData();
+    return (*data == *node.getData() && val == node.getVal());
 }
 
 template<typename T>

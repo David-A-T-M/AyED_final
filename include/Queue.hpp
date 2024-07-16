@@ -1,5 +1,7 @@
-/*
- * Class queue, inherits from List and can be used with any type of Node
+/**
+ * @class Queue
+ * @brief Composed of generic nodes that store a pointer to the data of the type that the node can store.
+ * @tparam NodeT Type of the nodes to compose the queue.
  */
 #pragma once
 #include "List.hpp"
@@ -11,11 +13,34 @@ class Queue : public List<NodeT> {
 private:
 
 public:
+    /**
+     * @brief Default constructor.
+     */
     Queue();
+    /**
+     * @brief Default destructor.
+     */
     ~Queue();
-    void enqueue(typename NodeT::valType*);
+    /**
+     * @brief Enqueues a new node with the specified data
+     *        The data type must match the type that NodeT can store.
+     * @param data Pointer to the data to be stored in the new node.
+     */
+    void enqueue(typename NodeT::valType *data);
+    /**
+     * @brief Dequeues the next element from the queue.
+     *        If the queue is empty, it prints a message and does nothing.
+     */
     void dequeue();
+    /**
+     * @brief Prints the contents of the queue from front to back.
+     *        This method overrides the printList method from the List class.
+     */
     void printList() const override;
+    /**
+     * @brief Returns a string representation of the queue.
+     * @return A string representation of the queue.
+     */
     string toString() const;
 };
 

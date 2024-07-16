@@ -21,7 +21,7 @@ protected:
 TEST_F(PacketTest, PacketCreation) {
     EXPECT_EQ(packet1.getPageID(), 1);
     EXPECT_EQ(packet1.getPagePosition(), 2);
-    EXPECT_EQ(packet1.getRouterPosition(), 3);
+    EXPECT_EQ(packet1.getRouterPriority(), 3);
     EXPECT_EQ(packet1.getDestinationIP(), terminalIP);
 }
 

@@ -1,10 +1,11 @@
-/*
- * Class List, composed of generic nodes
+/**
+ * @class List
+ * @brief Composed of generic nodes that store a pointer to the data of the type that the node can store.
+ * @tparam NodeT Type of the nodes to compose the list.
  */
 #pragma once
 
 #include <iostream>
-//#include "Node.hpp"
 
 using namespace std;
 
@@ -12,32 +13,127 @@ template <typename NodeT>
 class List {
 
 private:
-    NodeT *pHead = nullptr;               // Beginning of list
-    NodeT *pTail = nullptr;               // End of list
-    int nodeCount = 0;                    // Number of Nodos in list
+    NodeT *pHead = nullptr;     /**< Pointer to the first node in the list */
+    NodeT *pTail = nullptr;     /**< Pointer to the last node in the list */
+    int nodeCount = 0;          /**< Number of nodes in the list */
 
 public:
-    List();                               // Constructor
-    ~List();                              // Destructor, deletes all nodes
-    void pushFront(typename NodeT::valType*); // Adds a node to the beginning with the specified data
-    void pushBack(typename NodeT::valType*);  // Adds a node to the end of the list with the specified data
-    void pushAt(typename NodeT::valType*, int); // Add a node with specific data at a specific position
-    void popFront();                      // Remove the first node
-    void popBack();                       // Remove the last node
-    void popAt(int);                      // Remove a node at a specific position
-    void swapNodesAt(int, int);           // Swap the nodes at two specific positions
-    NodeT* getHead() const;               // Get a pointer to the first node
-    typename NodeT::valType* getHeadData() const; // Get a pointer to the data of the first node
-    typename NodeT::valType* getTailData() const; // Get a pointer to the data of the last node
-    typename NodeT::valType* getDataAtNode(int)const; // Get a pointer to the data of a node at a specific position
-    int getPos(typename NodeT::valType*) const; // Get the position of the first node with specific data
-    int getNodeCount() const;             // Get the number of nodes in the list
-    bool isEmpty() const;                 // Check if the list is empty
-    bool contains(typename NodeT::valType*) const; // Check if the list contains a node with specific data
-    virtual void printList() const;       // Print the data of all nodes in the list
-    string toString() const;              // Return a string with the data of all nodes in the list
-
-    void setDataAtNode(int, typename NodeT::valType*);
+    /**
+     * @brief Default constructor
+     */
+    List();
+    /**
+     * @brief Destructor for the List class.
+     *        Iterates through the list and deletes each node to free up memory.
+     *        Does not delete the data pointed to by the nodes.
+     */
+    ~List();
+    /**
+     * @brief Adds a node with the specified data at the beginning of the list.
+     *        The data type must match the type that NodeT can store.
+     * @param data  pointer to the data of the type that can be stored in the new node
+     */
+    void pushFront(typename NodeT::valType *data);
+    /**
+     * @brief Adds a node with the specified data at the end of the list.
+     *        The data type must match the type that NodeT can store.
+     * @param data  Pointer to the data to be stored in the new node
+     */
+    void pushBack(typename NodeT::valType *data);
+    /**
+     * @brief Adds a node with the specified data at the given position.
+     *        The existing node at this position and all subsequent nodes
+     *        are shifted one position to the end of the list.
+     *        The data type must match the type that NodeT can store.
+     * @param data  Pointer to the data to be stored in the new node.
+     * @param pos   The position at which the new node will be inserted.
+     */
+    void pushAt(typename NodeT::valType *data, int pos);
+    /**
+     * @brief Removes the first node from the list. If the list is empty, it prints a message and does nothing.
+     *        The NodeT object is deleted, but the data pointed to by the node is not deleted.
+     */
+    void popFront();
+    /**
+     * @brief Removes the last node from the list. If the list is empty, it prints a message and does nothing.
+     *        The NodeT object is deleted, but the data pointed to by the node is not deleted.
+     */
+    void popBack();
+    /**
+     * @brief Removes a node at the specified position from the list. The nodes after the removed node
+     *        are shifted one position to the beginning of the list. If the position is invalid or the list is empty,
+     *        it prints a message and does nothing. The NodeT object at the position is deleted, but the data pointed
+     *        by the node is not deleted.
+     * @param pos The position of the node to be removed.
+     */
+    void popAt(int);
+    /**
+     * @brief Sets the data of the node at the specified position. If the position is invalid or the list is empty,
+     *        does nothing.
+     * @param pos The position of the node.
+     * @param newData Pointer to the new data to be set.
+     */
+    void setDataAtNode(int pos, typename NodeT::valType *newData);
+    /**
+     * @brief Swaps the data of two nodes at the specified positions. If either position is invalid, it prints a message
+     *        and does nothing. If the positions are the same, it does nothing.
+     * @param m The position of the first node to swap.
+     * @param n The position of the second node to swap.
+     */
+    void swapNodesAt(int m, int n);
+    /**
+     * @brief Returns a pointer to the first node in the list. If the list is empty, returns nullptr.
+     * @return NodeT* Pointer to the first node.
+     */
+    NodeT* getHead() const;
+    /**
+     * @brief Returns a pointer to the data of the first node in the list. If the list is empty, returns nullptr.
+     * @return typename NodeT::valType* Pointer to the data of the first node.
+     */
+    typename NodeT::valType* getHeadData() const;
+    /**
+     * @brief Returns a pointer to the data of the last node in the list. If the list is empty, returns nullptr.
+     * @return typename NodeT::valType* Pointer to the data of the last node.
+     */
+    typename NodeT::valType* getTailData() const;
+    /**
+     * @brief Returns a pointer to the data of the node at the specified position. If the position is invalid
+     *        or the list is empty, returns nullptr.
+     * @param pos The position of the node.
+     * @return typename NodeT::valType* Pointer to the data of the node at the specified position.
+     */
+    typename NodeT::valType* getDataAtNode(int pos)const;
+    /**
+     * @brief Returns the position of the first node that contains the specified data. If the data is not found, returns -1.
+     * @param data Pointer to the data to search for.
+     * @return int The position of the node, or -1 if not found.
+     */
+    int getPos(typename NodeT::valType *data) const;
+    /**
+     * @brief Returns the number of nodes in the list.
+     * @return int The number of nodes.
+     */
+    int getNodeCount() const;
+    /**
+     * @brief Checks if the list is empty.
+     * @return bool True if the list is empty, false otherwise.
+     */
+    bool isEmpty() const;
+    /**
+     * @brief Checks if the list contains a node with the specified data.
+     * @param data Pointer to the data to search for.
+     * @return bool True if the data is found, false otherwise.
+     */
+    bool contains(typename NodeT::valType* data) const;
+    /**
+     * @brief Prints the data of all nodes in the list to the standard output.
+     */
+    virtual void printList() const;
+    /**
+     * @brief Returns a string representation of the list, containing the data of all nodes.
+     * @return string A string representation of the list.
+     */
+    virtual string toString() const;
 };
 
 template <typename NodeT>
@@ -198,6 +294,28 @@ void List<NodeT>::popAt(int pos) {
 }
 
 template <typename NodeT>
+void List<NodeT>::setDataAtNode(int pos, typename NodeT::valType* newData) {
+    if (pHead == nullptr || pos < 0 || pos >= nodeCount)    // Return nullptr for invalid position or empty list
+        return;
+
+    if (pos == 0)                           // If the position is 0, call getHeadData
+        pHead->setData(newData);
+
+    if (pos == nodeCount - 1)               // If the position is the last one, call getTailData
+        pTail->setData(newData);
+
+    NodeT *aux = pHead->getNext();
+    int curr_pos = 1;
+
+    while (curr_pos != pos) {               // Traverse the list until the position is reached
+        aux = aux->getNext();
+        curr_pos++;
+    }
+
+    aux->setData(newData);
+}
+
+template <typename NodeT>
 void List<NodeT>::swapNodesAt(int m, int n) {
     if (m < 0 || n < 0 || m >= nodeCount || n >= nodeCount) {     //validate the positions
         cout << "Invalid value." << endl;
@@ -313,26 +431,4 @@ template <typename NodeT>
 string List<NodeT>::toString() const {
     return "holi, soy una lista";
     // TODO
-}
-
-template <typename NodeT>
-void List<NodeT>::setDataAtNode(int pos, typename NodeT::valType* newData) {
-    if (pHead == nullptr || pos < 0 || pos >= nodeCount)    // Return nullptr for invalid position or empty list
-        return;
-
-    if (pos == 0)                           // If the position is 0, call getHeadData
-        pHead->setData(newData);
-
-    if (pos == nodeCount - 1)               // If the position is the last one, call getTailData
-        pTail->setData(newData);
-
-    NodeT *aux = pHead->getNext();
-    int curr_pos = 1;
-
-    while (curr_pos != pos) {               // Traverse the list until the position is reached
-        aux = aux->getNext();
-        curr_pos++;
-    }
-
-    aux->setData(newData);
 }
