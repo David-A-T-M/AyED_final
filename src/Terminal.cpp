@@ -1,27 +1,40 @@
+//
+// Created by david on 13/05/24.
+//
 #include "../include/Terminal.hpp"
-/*
-Terminal::Terminal(int routerId , int terminalId , Router* router) {
+#include "../include/Router.hpp"
+
+Terminal::Terminal(IPAddress ip, Router* router)
+        : ip(ip), connectedRouter(router) {
+    idForPage = ip.getTerminalIP()*1000;
+}
+
+Terminal::~Terminal() = default;
+
+void Terminal::sendPage(int pageLength, IPAddress& destIP) {
+    Page *page = new Page(idForPage, pageLength, ip, destIP);
+    //connectedRouter->receivePage(page); TODO
+    sentPages++;
+}
+
+void Terminal::receivePage(Page *page) {
+    delete page;
+    receivedPages++;
+}
+
+int Terminal::getReceivedPages() const {
+    return receivedPages;
+}
+
+int Terminal::getSentPages() const {
+    return sentPages;
+}
+
+const IPAddress& Terminal::getTerminalIp() {
+    return ip;
+}
+
+string Terminal::toString() const {
+    return "holi, soy una terminal";
     //TODO
 }
-
-void Terminal::sendPage(Page) {
-    //TODO: Crear página, incrementar sentPages y llamar al router para que reciba la página
-
-    /*
-    Page(int page_id, int page_length, vector<int> originIP, vector<int> cDestinationIP);
-    connectedRouter -> receivePage(Page);*/
-/*}
-
-void Terminal::receivePage(Page) {
-    //TODO incrementar receivedPages
-    //receivedPages++;
-}
-
-int Terminal::getReceivedPages() {
-    return receivedPages;
-
-}
-
-IPAddress Terminal::getTerminalIp() {
-    return ip;
-}*/
