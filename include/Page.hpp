@@ -1,14 +1,16 @@
-//
-// Created by David on 06/07/2024.
-//
+/*
+ * Class page inherits from List<Node<Packet>>, stores a reference to origin and destination IPs
+ * also has a page ID for it's packets to be identified and a page length for the amount of packets it holds
+ */
 #pragma once
 
 #include "Packet.hpp"
 #include "List.hpp"
+#include "Node.hpp"
 
 using namespace std;
 
-class Page : public List<Packet>{
+class Page : public List<Node<Packet>>{
 private:
     const int cPageID;                      // Page ID originIP+numberOfPageSent
     const int cPageLength;                  // Page length in packets
