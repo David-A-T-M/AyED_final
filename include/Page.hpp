@@ -5,10 +5,11 @@
 
 #include "Packet.hpp"
 #include "List.hpp"
+#include "Node.hpp"
 
 using namespace std;
 
-class Page : public List<Packet>{
+class Page : public List<Node<Packet>>{
 private:
     const int cPageID;                      // Page ID originIP+numberOfPageSent
     const int cPageLength;                  // Page length in packets

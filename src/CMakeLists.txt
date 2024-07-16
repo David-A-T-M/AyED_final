@@ -19,4 +19,5 @@ add_executable(AyEdD_Routers $<TARGET_OBJECTS:AyEdD_Routers_ObjLib>
         ../include/Node.hpp
         ../include/IPAddress.hpp
         ../include/Network.hpp
+        ../include/Page.hpp
 )
