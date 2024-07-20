@@ -1,8 +1,5 @@
-//
-// Created by David on 06/07/2024.
-//
 #include "gtest/gtest.h"
-#include "../include/List.hpp"
+#include "List.hpp"
 #include "Packet.hpp"
 #include "Node.hpp"
 #include "AdjNode.hpp"
@@ -22,11 +19,9 @@ public:
         pAdjEmptyList = new List<AdjNode<Packet>>();
         pAdjListWith1 = new List<AdjNode<Packet>>();
         pAdjListWith3 = new List<AdjNode<Packet>>();
-        packet0 = new Packet(1, 0, 0, ip);
-        packet1 = new Packet(1, 1, 0, ip);
-        packet2 = new Packet(1, 2, 0, ip);
-        //packet3 = new Packet(1, 3, 0, ip);
-        //packet4 = new Packet(1, 4, 0, ip);
+        packet0 = new Packet(1, 0, 5, 0, ip, ip);
+        packet1 = new Packet(1, 1, 5, 0, ip, ip);
+        packet2 = new Packet(1, 2, 5, 0, ip, ip);
         pListWith1->pushBack(packet0);
         pListWith3->pushBack(packet1);
         pListWith3->pushBack(packet2);
@@ -35,28 +30,41 @@ public:
         pAdjListWith3->pushBack(packet1);
         pAdjListWith3->pushBack(packet2);
         pAdjListWith3->pushBack(packet2);
+        auto* asd = pAdjListWith1->getNode(0);
     }
 
     void TearDown() override {
-        /*delete pEmptyList;
+        delete packet0;
+        delete packet1;
+        delete packet2;
+        delete pEmptyList;
         delete pListWith1;
         delete pListWith3;
+        delete pAdjEmptyList;
+        delete pAdjListWith1;
+        delete pAdjListWith3;
+        packet0 = nullptr;
+        packet1 = nullptr;
+        packet2 = nullptr;
         pEmptyList = nullptr;
         pListWith1 = nullptr;
         pListWith3 = nullptr;
-        packet0 = nullptr;
-        packet1 = nullptr;
-        packet2 = nullptr;*/
+        pAdjEmptyList = nullptr;
+        pAdjListWith1 = nullptr;
+        pAdjListWith3 = nullptr;
     }
 };
 
 // Constructor And Getters Tests
 TEST_F(ListTest, DefaultConstructor) {
+    ASSERT_EQ(pEmptyList->getHead(), nullptr);
+    ASSERT_EQ(pEmptyList->getTail(), nullptr);
     ASSERT_EQ(pEmptyList->getHeadData(), nullptr);
     ASSERT_EQ(pEmptyList->getTailData(), nullptr);
+    ASSERT_EQ(pEmptyList->getNode(0), nullptr);
     ASSERT_EQ(pEmptyList->getNodeCount(), 0);
-    ASSERT_EQ(pAdjEmptyList->getHeadData(), nullptr);
-    ASSERT_EQ(pAdjEmptyList->getTailData(), nullptr);
+    ASSERT_EQ(pAdjEmptyList->getHead(), nullptr);
+    ASSERT_EQ(pAdjEmptyList->getTail(), nullptr);
     ASSERT_EQ(pAdjEmptyList->getNodeCount(), 0);
 
 }
@@ -73,15 +81,15 @@ TEST_F(ListTest, GetHeadNode) {
     delete head;
 }
 
-TEST_F(ListTest, GetHeadAdjNode) {
-    AdjNode<Packet>* head = pAdjEmptyList->getHead();
-    ASSERT_EQ(head, nullptr);
-    head = pAdjListWith1->getHead();
-    ASSERT_EQ(head->getData(), packet0);
-    head = pAdjListWith3->getHead();
-    ASSERT_EQ(head->getData(), packet1);
-    head = nullptr;
-    delete head;
+TEST_F(ListTest, GetTailAdjNode) {
+    AdjNode<Packet>* tail = pAdjEmptyList->getTail();
+    ASSERT_EQ(tail, nullptr);
+    tail = pAdjListWith1->getTail();
+    ASSERT_EQ(tail->getData(), packet0);
+    tail = pAdjListWith3->getTail();
+    ASSERT_EQ(tail->getData(), packet2);
+    tail = nullptr;
+    delete tail;
 }
 
 // PushFront Tests
@@ -135,6 +143,7 @@ TEST_F(ListTest, PushAtInvalidPositionDoesNotAlterList) {
     pListWith3->pushAt(packet0, -1);
     ASSERT_EQ(pListWith3->getNodeCount(), 3);
     ASSERT_EQ(pListWith3->getHeadData(), packet1);
+    ASSERT_EQ(pListWith3->getNode(0), pListWith3->getHead());
     ASSERT_EQ(pListWith3->getDataAtNode(0), packet1);
     ASSERT_EQ(pListWith3->getTailData(), packet2);
 }
@@ -238,6 +247,40 @@ TEST_F(ListTest, PopAtMiddle){
     ASSERT_EQ(pAdjListWith3->getHeadData(), packet1);
     ASSERT_EQ(pAdjListWith3->getTailData(), packet2);
     ASSERT_EQ(pAdjListWith3->getNodeCount(), 2);
+}
+
+// SetDataAtNode Tests
+TEST_F(ListTest, SetDataAtNodeInvalidPositionDoesNotAlterList) {
+    pListWith3->setDataAtNode(-1, packet1);
+    ASSERT_EQ(pListWith3->getHeadData(), packet1);
+    ASSERT_EQ(pListWith3->getDataAtNode(1), packet2);
+    ASSERT_EQ(pListWith3->getTailData(), packet2);
+    cout<<"11"<<endl;
+}
+
+TEST_F(ListTest, SetDataAtNode0){
+    cout<<"a"<<endl;
+    pAdjListWith3->setDataAtNode(0, packet0);
+    cout<<"a"<<endl;
+    ASSERT_EQ(pAdjListWith3->getHeadData(), packet0);
+    cout<<"a"<<endl;
+    ASSERT_EQ(pAdjListWith3->getDataAtNode(1), packet2);
+    cout<<"a"<<endl;
+    ASSERT_EQ(pAdjListWith3->getTailData(), packet2);
+}
+
+TEST_F(ListTest, SetDataAtNodeTail){
+    pListWith3->setDataAtNode(2, packet0);
+    ASSERT_EQ(pListWith3->getHeadData(), packet1);
+    ASSERT_EQ(pListWith3->getDataAtNode(1), packet2);
+    ASSERT_EQ(pListWith3->getTailData(), packet0);
+}
+
+TEST_F(ListTest, SetDataAtNodeMiddle){
+    pAdjListWith3->setDataAtNode(1, packet0);
+    ASSERT_EQ(pAdjListWith3->getHeadData(), packet1);
+    ASSERT_EQ(pAdjListWith3->getDataAtNode(1), packet0);
+    ASSERT_EQ(pAdjListWith3->getTailData(), packet2);
 }
 
 // SwapNodesAt Tests

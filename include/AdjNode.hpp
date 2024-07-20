@@ -1,15 +1,15 @@
-/**
- * @class AdjNode
- * @brief Adjacent Node class to be used in a linked list, stack or queue.
- *        Stores a pointer to the data, an integer value and a pointer to the next node in the structure.
- * @tparam T Type of the data to be stored in the node.
- */
 #pragma once
 
 #include <string>
 
 using namespace std;
 
+/**
+ * @class AdjNode
+ * @brief Adjacent Node class to be used in a linked list, stack or queue.
+ *        Stores a pointer to the data, an integer value and a pointer to the next node in the structure.
+ * @tparam T Type of the data to be stored in the node.
+ */
 template <typename T>
 class AdjNode {
 private:
@@ -32,9 +32,9 @@ public:
      * @brief Data Next Constructor. Initializes a new instance of the Node class with the provided data and int value.
      *        Sets *next to nullptr.
      * @param data Pointer to the data to be stored in the node.
-     * @param a Integer value to be stored in the node.
+     * @param val Value to be stored in the node.
      */
-    AdjNode(T *data, int a);
+    AdjNode(T *data, int val);
     /**
      * @brief Data Next Constructor. Initializes a new instance of the Node class with the provided data and next node.
      * @param data Pointer to the data to be stored in the node.
@@ -47,7 +47,7 @@ public:
      * @param next Pointer to the next node in the structure.
      * @param a Integer value to be stored in the node.
      */
-    AdjNode(T *data, AdjNode *next, int a);
+    AdjNode(T *data, AdjNode *next, int val);
     /**
      * @brief Default Destructor.
      */
@@ -67,6 +67,11 @@ public:
      * @param newA Integer value to be stored in the node.
      */
     void setVal(int newA);
+    /**
+     * @brief Adds an integer value to the node.
+     * @param a Integer value to add to the node.
+     */
+    void addToVal(int a);
     /**
      * @brief Gets the data stored in the node.
      * @return Pointer to the node's data.
@@ -109,16 +114,16 @@ AdjNode<T>::AdjNode(T* data)
         : data(data), next(nullptr) {}
 
 template <typename T>
-AdjNode<T>::AdjNode(T* data, int a)
-        : data(data), val(a) {}
+AdjNode<T>::AdjNode(T* data, int val)
+        : data(data), val(val) {}
 
 template <typename T>
 AdjNode<T>::AdjNode(T* data, AdjNode* next)
         : data(data), next(next) {}
 
 template <typename T>
-AdjNode<T>::AdjNode(T* data, AdjNode* next, int a)
-        : data(data), next(next), val(a) {}
+AdjNode<T>::AdjNode(T* data, AdjNode* next, int val)
+        : data(data), next(next), val(val) {}
 
 template <typename T>
 AdjNode<T>::~AdjNode() = default;
@@ -136,6 +141,11 @@ void AdjNode<T>::setNext(AdjNode* newNext) {
 template <typename T>
 void AdjNode<T>::setVal(int newA) {
     this->val = newA;
+}
+
+template <typename T>
+void AdjNode<T>::addToVal(int a) {
+    this->val += a;
 }
 
 template<typename T>

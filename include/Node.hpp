@@ -1,15 +1,15 @@
-/**
- * @class Node
- * @brief Node class to be used in a linked list, stack or queue.
- *        Stores a pointer to the data and a pointer to the next node in the structure.
- * @tparam T Type of the data to be stored in the node.
- */
 #pragma once
 
 #include <string>
 
 using namespace std;
 
+/**
+ * @class Node
+ * @brief Node class to be used in a linked list, stack or queue.
+ *        Stores a pointer to the data and a pointer to the next node in the structure.
+ * @tparam T Type of the data to be stored in the node.
+ */
 template <typename T>
 class Node {
 private:
@@ -48,13 +48,13 @@ public:
      */
     void setNext(Node *newNext);
     /**
-     * @brief Gets the data stored in the node.
-     * @return Pointer to the node's data.
+     * @brief Gets a pointer to the data of the node.
+     * @return Node's data.
      */
     T* getData() const;
     /**
      * @brief Gets the next node in the structure.
-     * @return Pointer to the next node.
+     * @return Next node.
      */
     Node<T>* getNext() const;
     /**

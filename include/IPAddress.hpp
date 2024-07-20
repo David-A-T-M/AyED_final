@@ -1,9 +1,3 @@
-/**
- * @class IPAddress
- * @brief Represents an IP address that can be used for either a modem or a terminal.
- *        For a modem, it uses an 8-bit address. For a terminal, it combines the modem's 8-bit address
- *        with an additional 8-bit terminal address, resulting in a 16-bit address.
- */
 #pragma once
 
 #include <iostream>
@@ -11,44 +5,53 @@
 #include <cstdint>
 
 using namespace std;
-
+/**
+ * @class IPAddress
+ * @brief Represents an IP address that can be used for either a router or a terminal.
+ *        For a router, it uses an 8-bit address. For a terminal, it combines the router's 8-bit address
+ *        with an additional 8-bit terminal address, resulting in a 16-bit address.
+ */
 class IPAddress {
 private:
-    const uint8_t modemIP;         /**< Modem IP */
-    const uint8_t terminalIP;      /**< Terminal IP */
-    bool Modem;                    /**< True if the IP is from a modem */
+    const uint8_t routerIP;         /**< Router IP. */
+    const uint8_t terminalIP;       /**< Terminal IP */
+    bool Router;                    /**< True if the IP is from a router */
 
 public:
     /**
-     * @brief Constructor for a modem IP
-     * @param modemIP Modem IP
+     * @brief Default Constructor
      */
-    explicit IPAddress(uint8_t modemIP);
+    IPAddress();
+    /**
+     * @brief Constructor for a router IP
+     * @param routerIP Router IP
+     */
+    explicit IPAddress(uint8_t routerIP);
     /**
      * @brief Constructor for a terminal IP
-     * @param modemIP Modem IP
+     * @param routerIP Router IP
      * @param terminalIP Terminal IP
      */
-    IPAddress(uint8_t modemIP, uint8_t terminalIP);
+    IPAddress(uint8_t routerIP, uint8_t terminalIP);
     /**
      * @brief Default Destructor
      */
     ~IPAddress();
     /**
-     * @brief Get the modem IP
-     * @return Modem IP
+     * @brief Get the router IP
+     * @return Router IP
      */
-    uint8_t getModemIP() const;
+    uint8_t getRouterIP() const;
     /**
      * @brief Get the terminal IP
      * @return Terminal IP
      */
     uint8_t getTerminalIP() const;
     /**
-     * @brief Check if the IP is from a modem
-     * @return True if the IP is from a modem, false if it is from a terminal
+     * @brief Checks if the IP is from a router
+     * @return True if the IP is from a router, false if it is from a terminal
      */
-    bool isModem() const;
+    bool isRouter() const;
     /**
      * @brief Get a string representation of the IP
      * @return String representation of the IP

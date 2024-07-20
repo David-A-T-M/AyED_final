@@ -7,12 +7,13 @@
 
 class AdjacencyNodeTest : public ::testing::Test {
 protected:
-    IPAddress terminalIP{170, 0b11001100};
+    IPAddress ip1{170, 0b11001100};
+    IPAddress ip2{0b11001100, 170};
     Packet *packet0{}, *packet1{}, *packet2{};
     AdjNode<Packet> *node0{}, *node1{}, *node2{}, *node3{};
     void SetUp() override {
-        packet0 = new Packet(1, 1, 0, terminalIP);
-        packet1 = new Packet(1, 2, 0, terminalIP);
+        packet0 = new Packet(1, 1, 5, 0, ip1, ip2);
+        packet1 = new Packet(1, 2, 5, 0, ip1, ip2);
         node0 = new AdjNode<Packet>(packet0);
         node1 = new AdjNode<Packet>(packet0, 10);
         node2 = new AdjNode<Packet>(packet0, node1);
@@ -66,6 +67,14 @@ TEST_F(AdjacencyNodeTest, SetWeight) {
     EXPECT_EQ(node3->getVal(), 5);
     EXPECT_EQ(node3->getData(), packet1);
     EXPECT_EQ(node3->getNext(), node0);
+}
+
+TEST_F(AdjacencyNodeTest, ValModifiers) {
+    EXPECT_EQ(node0->getVal(), 0);
+    node0->addToVal(5);
+    EXPECT_EQ(node0->getVal(), 5);
+    node0->setVal(20);
+    EXPECT_EQ(node0->getVal(), 20);
 }
 
 // Operator == test

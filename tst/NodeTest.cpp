@@ -7,13 +7,14 @@
 
 class NodeTest : public ::testing::Test {
 protected:
-    IPAddress terminalIP{170, 0b11001100};
+    IPAddress ip1{170, 0b11001100};
+    IPAddress ip2{0b11001100, 170};
     Packet *packet0{}, *packet1{}, *packet2{};
     Node<Packet> *node0{}, *node1{}, *node2{}, *node3{};
     void SetUp() override {
-        packet0 = new Packet(1, 1, 0, terminalIP);
-        packet1 = new Packet(1, 2, 0, terminalIP);
-        packet2 = new Packet(1, 3, 0, terminalIP);
+        packet0 = new Packet(1, 1, 5, 0, ip1, ip2);
+        packet1 = new Packet(1, 2, 5, 0, ip1, ip2);
+        packet2 = new Packet(1, 3, 5, 0, ip1, ip2);
         node1 = new Node<Packet>(packet1);
         node0 = new Node<Packet>(packet0, node1);
         node2 = new Node<Packet>(packet2);

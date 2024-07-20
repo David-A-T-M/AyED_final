@@ -1,34 +1,35 @@
-#include "../include/IPAddress.hpp"
+#include "IPAddress.hpp"
 
-IPAddress::IPAddress(uint8_t modemIP)
-            : modemIP(modemIP), terminalIP(0), Modem(true) {}
+IPAddress::IPAddress() : routerIP(0), terminalIP(0), Router(true) {}
 
-IPAddress::IPAddress(uint8_t modemIP, uint8_t terminalIP)
-            : modemIP(modemIP), terminalIP(terminalIP), Modem(false) {}
+IPAddress::IPAddress(uint8_t routerIP)
+            : routerIP(routerIP), terminalIP(0), Router(true) {}
+
+IPAddress::IPAddress(uint8_t routerIP, uint8_t terminalIP)
+            : routerIP(routerIP), terminalIP(terminalIP), Router(false) {}
 
 IPAddress::~IPAddress() = default;
 
-uint8_t IPAddress::getModemIP() const{
-    return modemIP;
+uint8_t IPAddress::getRouterIP() const {
+    return routerIP;
 }
 
-uint8_t IPAddress::getTerminalIP() const{
+uint8_t IPAddress::getTerminalIP() const {
     return terminalIP;
 }
 
-bool IPAddress::isModem() const{
-    return Modem;
+bool IPAddress::isRouter() const {
+    return Router;
 }
 
-string IPAddress::toString() const{
-    if (Modem) {
-        return "Modem IP: " + bitset<8>(modemIP).to_string();
+string IPAddress::toString() const {
+    if (Router) {
+        return "Router IP: " + bitset<8>(routerIP).to_string();
     } else {
-        return "Terminal IP: " + bitset<8>(modemIP).to_string() + "." + bitset<8>(terminalIP).to_string();
+        return "Terminal IP: " + bitset<8>(routerIP).to_string() + "." + bitset<8>(terminalIP).to_string();
     }
 }
 
-bool IPAddress::operator==(const IPAddress &ip) const{
-    return modemIP == ip.modemIP && terminalIP == ip.terminalIP;
+bool IPAddress::operator==(const IPAddress &ip) const {
+    return routerIP == ip.routerIP && terminalIP == ip.terminalIP;
 }
-
