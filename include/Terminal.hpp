@@ -34,7 +34,8 @@ public:
      */
     void sendPage(int length, IPAddress &destIP);
     /**
-     * @brief Receives a page from a router, deletes it, and increments the count of received pages.
+     * @brief Receives a page from a router, iterates through its nodes deleting each packet,
+     *        then deletes the page, and increments the count of received pages.
      * @param page Pointer to the page being received.
      */
     void receivePage(Page *page);

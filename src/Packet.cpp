@@ -39,7 +39,7 @@ const IPAddress& Packet::getOriginIP() const {
 }
 
 string Packet::toString() const {
-    return "Packet " + to_string(cPagePosition);
+    return to_string(cPageID) + "-" + to_string(cPagePosition);
 }
 
 bool Packet::operator==(const Packet& packet) const {

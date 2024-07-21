@@ -6,18 +6,21 @@
 
 Terminal::Terminal(IPAddress ip, Router* router)
         : ip(ip), connectedRouter(router) {
-    idForPage = ip.getTerminalIP()*1000;
+    idForPage = ip.getRouterIP()*1000000+ip.getTerminalIP()*1000;
 }
 
 Terminal::~Terminal() = default;
 
 void Terminal::sendPage(int pageLength, IPAddress& destIP) {
     Page *page = new Page(idForPage, pageLength, ip, destIP);
-    //connectedRouter->receivePage(page); TODO
+    connectedRouter->receivePage(page);
     sentPages++;
 }
 
 void Terminal::receivePage(Page *page) {
+    for (int i = 0; i < page->getNodeCount(); i++) {
+        delete page->getDataAtNode(i);
+    }
     delete page;
     receivedPages++;
 }
@@ -35,6 +38,8 @@ const IPAddress& Terminal::getTerminalIp() {
 }
 
 string Terminal::toString() const {
-    return "holi, soy una terminal";
-    //TODO
+    string a;
+    a += ip.toString();
+    a += "\tRP: " + to_string(receivedPages) + "\tSP: " + to_string(sentPages);
+    return a;
 }

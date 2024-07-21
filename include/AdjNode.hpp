@@ -15,7 +15,7 @@ class AdjNode {
 private:
     T* data;                    /**< Pointer to the data stored in the node. */
     AdjNode* next;              /**< Pointer to the next node in the structure. */
-    int val = 0;                /**< Integer stored in the node. */
+    int val = 1;                /**< Integer stored in the node. */
 public:
     using valType = T;
 
@@ -175,5 +175,5 @@ bool AdjNode<T>::operator==(const AdjNode<T>& node) const {
 
 template<typename T>
 string AdjNode<T>::toString() const {
-    return data->toString();
+    return data->toString() + "\tWeight: " + to_string(val);
 }
