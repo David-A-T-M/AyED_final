@@ -15,7 +15,7 @@ add_executable(RunTests test_main.cpp
         AdjNodeTest.cpp)
 
 # Link the Google Test libraries
-target_link_libraries(RunTests gtest gtest_main AyEdD_Routers_ObjLib)
+target_link_libraries(RunTests gtest gtest_main $<TARGET_OBJECTS:AyEdD_Routers_ObjLib>)
 
 # Specify include directories for the tests
 target_include_directories(RunTests PRIVATE ../include)

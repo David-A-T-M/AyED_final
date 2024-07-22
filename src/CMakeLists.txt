@@ -13,15 +13,10 @@ add_library(AyEdD_Routers_ObjLib OBJECT
 target_include_directories(AyEdD_Routers_ObjLib PUBLIC ../include)
 
 # Create the executable using the OBJECT library
-add_executable(AyEdD_Routers $<TARGET_OBJECTS:AyEdD_Routers_ObjLib>
-        ../include/AdjNode.hpp
-        ../include/Admin.hpp
-        ../include/IPAddress.hpp
-        ../include/List.hpp
-        ../include/Network.hpp
-        ../include/Node.hpp
-        ../include/Packet.hpp
-        ../include/Page.hpp
-        ../include/Router.hpp
-        ../include/Terminal.hpp
-)
+add_executable(AyEdD_Routers main.cpp)
+
+# Link the OBJECT library to the executable
+target_link_libraries(AyEdD_Routers PRIVATE $<TARGET_OBJECTS:AyEdD_Routers_ObjLib>)
+
+# Include headers
+target_include_directories(AyEdD_Routers PRIVATE ../include)

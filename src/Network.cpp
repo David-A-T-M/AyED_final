@@ -1,6 +1,3 @@
-//
-// Created by David on 11/07/2024.
-//
 #include "Network.hpp"
 
 Network::Network() : routers(), adjLists() {}
@@ -22,9 +19,18 @@ Network::~Network() {
 }
 
 void Network::recalculateRoutes() {
+    cout << "Recalculating routes..." << endl << endl;
     for (int i = 0; i < routers->getNodeCount(); i++) {
         vector<int> parents = dijkstra(i);
+        for (int j = 0; j < parents.size(); j++) {
+            cout << parents[j] << " ";
+        }
+        cout << endl;
         fillNextHop(i, parents);
+    }
+    for (int i = 0; i < routers->getNodeCount(); i++) {
+        Router *router = routers->getDataAtNode(i);
+        router->checkQueues();
     }
 }
 
@@ -35,9 +41,9 @@ vector<int> Network::dijkstra(int start) {
     vector<int> parents(nodeCount, 0);
     dist[start] = 0;                        // Set the Weight from the starting router to itself to 0
     parents[start] = start;                 // Set the parent of the starting router to itself
-    Router *nearest{};                      // Pointer to the nearest router in the actual iteration
-    int adjNode = 0;                        // Position of the current adjacent node
-    int adjWeight = 0;                      // Weight of the current adjacent node
+    Router *nearest;                      // Pointer to the nearest router in the actual iteration
+    int adjNode;                        // Position of the current adjacent node
+    int adjWeight;                      // Weight of the current adjacent node
 // Iteration for each non-visited router with the minimum distance
     for(int i = 0; i < adjLists.getNodeCount(); i++){
         int locDist = INF;
@@ -51,13 +57,13 @@ vector<int> Network::dijkstra(int start) {
         visited[distNearest] = true;         // Mark the nearest router as visited
         nearest = routers->getDataAtNode(distNearest);    // Get the pointer to the nearest router
         //distNearest = locDist;              // Get the weight to the nearest router
-        AdjNode<Router> *currNode = nearest->getAdjacencyList()->getHead();
+        auto *currNode = nearest->getAdjacencyList()->getHead();
         while(currNode){
-            Router *adjRouter = currNode->getData();
+            auto *adjRouter = currNode->getData();
             adjWeight = currNode->getVal();
             adjNode = routers->getPos(adjRouter);
-            if(!visited[adjNode] && distNearest + adjWeight < dist[adjNode]){
-                dist[adjNode] = distNearest + adjWeight;
+            if(!visited[adjNode] && locDist + adjWeight < dist[adjNode]){
+                dist[adjNode] = locDist + adjWeight;
                 parents[adjNode] = distNearest;
             }
             currNode = currNode->getNext();
@@ -94,6 +100,8 @@ void Network::connectRouters(Router* router1, Router* router2) {
     if (!list1->contains(router2)) {
         list1->pushBack(router2);
         list2->pushBack(router1);
+        router1->getAdjRoutersQueues()->pushBack(new Queue<Node<Packet>>());
+        router2->getAdjRoutersQueues()->pushBack(new Queue<Node<Packet>>());
     }
 }
 
@@ -130,8 +138,8 @@ void Network::generateAdditionalRandomConnections(){
 
 void Network::generateRandomNetwork(int iter) {
     int defaultIter = iter;
-    if(iter > 10 || iter < 0){
-        defaultIter = 0;
+    if(iter > 20 || iter < 0){
+        defaultIter = 1;
     }
     initializeNetworkConnections();
     for (int i = 0; i < defaultIter; ++i) {
@@ -139,3 +147,6 @@ void Network::generateRandomNetwork(int iter) {
     }
 }
 
+List<Node<List<AdjNode<Router>>>>* Network::getAdjLists() {
+    return &adjLists;
+}

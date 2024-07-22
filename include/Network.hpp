@@ -79,10 +79,11 @@ public:
      */
     void generateAdditionalRandomConnections();
     /**
-     * @brief Generates a random network with a specified level of connectivity (0-10).
+     * @brief Generates a random network with a specified level of connectivity (0-20).
      *        The higher the level, the more connected the network will be.
-     *        If the parameter is out of bounds, 0 is used as the default value.
-     * @param iter Number of iterations to generate the network, must be in range [0, 10]
+     *        If the parameter is out of bounds, 1 is used as the default value.
+     * @param iter Number of iterations to generate the network, must be in range [0, 20]
      */
     void generateRandomNetwork(int iter);
+    List<Node<List<AdjNode<Router>>>>* getAdjLists();
 };

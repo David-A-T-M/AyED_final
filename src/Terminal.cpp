@@ -11,10 +11,11 @@ Terminal::Terminal(IPAddress ip, Router* router)
 
 Terminal::~Terminal() = default;
 
-void Terminal::sendPage(int pageLength, IPAddress& destIP) {
+void Terminal::sendPage(int pageLength, const IPAddress& destIP) {
     Page *page = new Page(idForPage, pageLength, ip, destIP);
     connectedRouter->receivePage(page);
     sentPages++;
+    idForPage++;
 }
 
 void Terminal::receivePage(Page *page) {

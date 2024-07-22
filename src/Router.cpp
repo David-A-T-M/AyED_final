@@ -60,10 +60,12 @@ void Router::receivePage(Page* page) {
     adjacencyList.getNode(qPos)->addToVal(page->getNodeCount());
     adjRoutersQueues.getDataAtNode(qPos)->enqueueList(page);
     delete page;
+    rp = true;
 }
 
 void Router::sendPage(int termPos, Page *page) {
     terminals.getDataAtNode(termPos)->receivePage(page);
+    sp = true;
 }
 
 void Router::setNextHop(int i, int newA){
@@ -279,6 +281,7 @@ void Router::printIncompletePages() {
 void Router::printRouterInfo() {
     printRouterName();
     cout<<endl;
+    printActivity();
     printAdjacencyList();
     printTerminals();
     printQueues();
@@ -287,4 +290,19 @@ void Router::printRouterInfo() {
 
 int Router::getPacketsReceived() const {
     return packetsReceived;
+}
+
+void Router::printActivity() {
+    if (rp) {
+        cout<<"Has received a page from a terminal"<<endl;
+    }
+    if (sp) {
+        cout<<"Has sent a page to a terminal"<<endl;
+    }
+    rp = false;
+    sp = false;
+}
+
+void Router::addHopDest() {
+    nextHop.push_back(0);
 }

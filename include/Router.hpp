@@ -19,6 +19,8 @@ private:
     List<Node<List<Node<Packet>>>> incompletePages; /**< List of Lists of packets of an incomplete page */
     vector<int> nextHop;                    /**< Vector of next hops to reach each router */
     int packetsReceived = 0;
+    bool rp = false;
+    bool sp = false;
 public:
     /**
      * @brief Constructor. Creates a Router object with a specified IP address, initializes all the lists as empty,
@@ -121,6 +123,7 @@ public:
     void printAdjacencyList();
     void printQueues();
     void printIncompletePages();
+    void printActivity();
 
     string toString();
     /**
@@ -136,4 +139,5 @@ public:
     List<Node<Queue<Node<Packet>>>>* getAdjRoutersQueues();
     List<Node<Terminal>>* getTerminals();
     int getPacketsReceived() const;
+    void addHopDest();
 };

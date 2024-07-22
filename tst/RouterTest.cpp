@@ -80,6 +80,7 @@ TEST_F(RouterTest, constructor) {
     router1->receivePage(page2);
     router1->receivePacket(packet3);
     router1->receivePacket(packet5);
+    router1->getTerminals()->getDataAtNode(1)->sendPage(3, router2->getTerminals()->getDataAtNode(1)->getTerminalIp());
     router1->printRouterInfo();
     cout<<endl;
     router1->setNextHop(4, 1);
@@ -89,6 +90,8 @@ TEST_F(RouterTest, constructor) {
     router1->receivePacket(packet4);
     router1->printRouterInfo();
     router1->sendFromQueues(2);
+    router1->getTerminals()->getDataAtNode(0)->sendPage(3, router3->getTerminals()->getDataAtNode(1)->getTerminalIp());
+    router1->getTerminals()->getDataAtNode(1)->sendPage(3, router5->getTerminals()->getDataAtNode(1)->getTerminalIp());
     cout<<endl;
     router1->printRouterInfo();
     cout<<endl;
