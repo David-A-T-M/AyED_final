@@ -39,7 +39,10 @@ const IPAddress& Packet::getOriginIP() const {
 }
 
 string Packet::toString() const {
-    return to_string(cPageID) + "-" + to_string(cPagePosition);
+    ostringstream oss;
+    int a = rDestinationIP.getRouterIP();
+    oss << a << std::setw(9) << std::setfill('0') << cPageID;
+    return oss.str() + "-" + to_string(cPagePosition);
 }
 
 bool Packet::operator==(const Packet& packet) const {

@@ -5,13 +5,15 @@ Admin* initialization();
 void showMenu();
 void addUnconnectedRouter(Admin *admin);
 void simulate(Admin *admin);
+void sbs(Admin *admin);
+void showSubMenu(Admin *admin);
 
 int main() {
     srand(time(nullptr));
     Admin *admin = initialization();
-    showMenu();
     int option;
     do {
+        showMenu();
         cout << "Enter an option: ";
         cin >> option;
         cout << endl;
@@ -28,23 +30,20 @@ int main() {
                 break;
             case 2:
                 admin->addRandomlyConnectedRouter();
+                admin->getNetwork()->recalculateRoutes();
                 admin->printRouters();
                 break;
             case 3:
                 simulate(admin);
                 break;
             case 4:
-                int bw;
-                cout << "Enter the Bandwidth: ";
-                cin >> bw;
-                admin->setBW(bw);
+                showSubMenu(admin);
                 break;
             case 5:
-                int nbw;
-                cout << "Enter the Bandwidth: ";
-                cin >> nbw;
-                cout << endl;
-                admin->setBW(nbw);
+                break;
+            case 6:
+                cout << "Step by step: " << endl;
+                sbs(admin);
                 break;
 
             default:
@@ -76,6 +75,21 @@ Admin* initialization() {
     } while (true);
 
     admin->setBW(BW);
+
+    int terminals;
+    do {
+        cout<<"Enter how many terminals per router: ";
+        cin>>terminals;
+        cout<<endl;
+        if (cin.fail()) {
+            cout << "Invalid option" << endl;
+            cin.clear(); // clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+            continue;
+        }
+        break;
+    } while (true);
+    admin->setTerminals(terminals);
     int routersQuantity;
     do {
         cout<<"Enter the number of routers to create: ";
@@ -116,8 +130,9 @@ void showMenu() {
     cout << "1. Add unconnected router" << endl;
     cout << "2. Add randomly connected router" << endl;
     cout << "3. Simulation" << endl;
-    cout << "4. Set New Bandwidth" << endl;
+    cout << "4. Customization options" << endl;
     cout << "5. Exit" << endl;
+    cout << "6. Step by step" << endl;
 }
 
 void addUnconnectedRouter(Admin *admin) {
@@ -145,16 +160,15 @@ void addUnconnectedRouter(Admin *admin) {
             }
         }
     } while (!end);
+    admin->getNetwork()->recalculateRoutes();
 }
 
 void simulate(Admin *admin) {
     bool end = false;
     do {
-        cout<<"a"<<endl;
         admin->sendPages();
-        cout<<"a"<<endl;
         admin->sendFromQueues();
-        cout<<"a"<<endl;
+        admin->checkCounter();
         admin->printRouters();
         cout<<"Do you want to simulate next iteration? (y/n)"<<endl;
         char c;
@@ -165,4 +179,89 @@ void simulate(Admin *admin) {
             end = true;
         }
     } while (!end);
+}
+
+void sbs(Admin *admin) {
+    char c;
+    do {
+        admin->sendPages();
+        admin->printRouters();
+        cout<<"Send from Queues? (y/n)"<<endl;
+        cin>>c;
+        if (c != 'y' && c != 'Y')
+            break;
+        admin->sendFromQueues();
+        admin->printRouters();
+        cout<<"Check for recalculation? (y/n)"<<endl;
+        cin>>c;
+        if (c != 'y' && c != 'Y')
+            break;
+        if (admin->checkCounter()) {
+            admin->printRouters();
+            cout<<"Send new pages? (y/n)"<<endl;
+            cin>>c;
+            if (c != 'y' && c != 'Y')
+                break;
+        } else {
+            cout<<"No need to recalculate"<<endl;
+            cout<<"Send new pages? (y/n)"<<endl;
+            cin>>c;
+            if (c != 'y' && c != 'Y')
+                break;
+        }
+    } while (true);
+}
+
+void showSubMenu(Admin *admin) {
+    int subOption;
+    do {
+        cout << "Submenu:" << endl;
+        cout << "1. Set Bandwidth" << endl;
+        cout << "2. Set maximum page length" << endl;
+        cout << "3. Set Number of terminals per router" << endl;
+        cout << "4. Set the Probability to send a page" << endl;
+        cout << "5. Back to Main Menu" << endl;
+        cout << "Enter an option: ";
+        cin >> subOption;
+        cout << endl;
+        if (cin.fail()) {
+            cout << "Invalid option" << endl;
+            cin.clear(); // clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+            continue;
+        }
+        switch (subOption) {
+            case 1:
+                int bw;
+                cout << "Enter the new Bandwidth: ";
+                cin >> bw;
+                admin->setBW(bw);
+                break;
+            case 2:
+                int pl;
+                cout << "Enter the new maximum page length: " << endl;
+                cin >> pl;
+                admin->setMaxPageLength(pl);
+                break;
+            case 3:
+                int tpr;
+                cout << "Enter the new number of terminals per router (should be higher than the current): " << endl;
+                cin >> tpr;
+                admin->setTerminals(tpr);
+                admin->setRoutersTerminals();
+                break;
+            case 4:
+                int prob;
+                cout << "Enter the new probability for a Terminal to send a page (0-100): " << endl;
+                cin >> prob;
+                admin->setProbability(prob);
+                break;
+            case 5:
+                cout << "Returning to main menu..." << endl;
+                return;
+            default:
+                cout << "Invalid option" << endl;
+                break;
+        }
+    } while (subOption != 5);
 }

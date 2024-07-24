@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IPAddress.hpp"
+#include <sstream>
+#include <iomanip>
 
 /**
  * @class Packet
