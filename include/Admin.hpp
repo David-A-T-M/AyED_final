@@ -1,7 +1,16 @@
 #pragma once
 
 #include "Network.hpp"
-
+/**
+ * @class Admin
+ * @brief Manages the network and the routers.
+ *
+ * The Admin class is responsible for managing the network and the routers within it.
+ * It provides methods to set various network parameters such as bandwidth, number of terminals,
+ * probability of sending a page, and maximum page length. The class also includes methods to
+ * create a random network, add routers (both unconnected and randomly connected), send pages
+ * and packets, it updates the routes every two iterations, and print information about the routers.
+ */
 class Admin {
 private:
     List<Node<Router>> *routers;
