@@ -26,24 +26,28 @@ public:
      * @brief Default constructor
      */
     List();
+
     /**
      * @brief Destructor for the List class.
      *        Iterates through the list and deletes each node to free up memory.
      *        Does not delete the data pointed to by the nodes.
      */
     ~List();
+
     /**
      * @brief Adds a node with the specified data at the beginning of the list.
      *        The data type must match the type that NodeT can store.
      * @param data pointer to the data of the type that can be stored in the new node
      */
     void pushFront(typename NodeT::valType *data);
+
     /**
      * @brief Adds a node with the specified data at the end of the list.
      *        The data type must match the type that NodeT can store.
      * @param data Pointer to the data to be stored in the new node
      */
     void pushBack(typename NodeT::valType *data);
+
     /**
      * @brief Adds a node with the specified data at the given position. The existing node at this position
      *        and all subsequent nodes are shifted one position to the end of the list.
@@ -52,16 +56,19 @@ public:
      * @param pos   The position at which the new node will be inserted.
      */
     void pushAt(typename NodeT::valType *data, int pos);
+
     /**
      * @brief Removes the first node from the list. If the list is empty, it prints a message and does nothing.
      *        The NodeT object is deleted, but the data pointed to by the node is not deleted.
      */
     void popFront();
+
     /**
      * @brief Removes the last node from the list. If the list is empty, it prints a message and does nothing.
      *        The NodeT object is deleted, but the data pointed to by the node is not deleted.
      */
     void popBack();
+
     /**
      * @brief Removes a node at the specified position from the list. The nodes after the removed node
      *        are shifted one position to the beginning of the list. If the position is invalid or the list is empty,
@@ -70,6 +77,7 @@ public:
      * @param pos The position of the node to be removed.
      */
     void popAt(int);
+
     /**
      * @brief Sets the data of the node at the specified position. If the position is invalid or the list is empty,
      *        does nothing.
@@ -77,6 +85,7 @@ public:
      * @param newData Pointer to the new data to be set.
      */
     void setDataAtNode(int pos, typename NodeT::valType *newData);
+
     /**
      * @brief Swaps the data of two nodes at the specified positions. If either position is invalid, it prints a message
      *        and does nothing. If the positions are the same, it does nothing.
@@ -84,16 +93,19 @@ public:
      * @param n The position of the second node to swap.
      */
     void swapNodesAt(int m, int n);
+
     /**
      * @brief Gets a pointer to the first node in the list. If the list is empty, gets nullptr.
      * @return The first node.
      */
     NodeT* getHead() const;
+
     /**
      * @brief Gets a pointer to the last node in the list. If the list is empty, gets nullptr.
      * @return The last node.
      */
     NodeT* getTail() const;
+
     /**
      * @brief Gets a pointer to the node at the specified position. If the position is invalid or the list is empty,
      *        gets nullptr.
@@ -101,16 +113,19 @@ public:
      * @return The node at the specified position.
      */
     NodeT* getNode(int pos) const;
+
     /**
      * @brief Returns a pointer to the data of the first node in the list. If the list is empty, returns nullptr.
      * @return The data of the first node.
      */
     typename NodeT::valType* getHeadData() const;
+
     /**
      * @brief Returns a pointer to the data of the last node in the list. If the list is empty, returns nullptr.
      * @return The data of the last node.
      */
     typename NodeT::valType* getTailData() const;
+
     /**
      * @brief Returns a pointer to the data of the node at the specified position. If the position is invalid
      *        or the list is empty, returns nullptr.
@@ -118,32 +133,38 @@ public:
      * @return The data of the node at the specified position.
      */
     typename NodeT::valType* getDataAtNode(int pos)const;
+
     /**
      * @brief Returns the position of the first node that contains the specified data. If the data is not found, returns -1.
      * @param data Pointer to the data to search for.
      * @return The position of the node, or -1 if not found.
      */
     int getPos(typename NodeT::valType *data) const;
+
     /**
      * @brief Returns the number of nodes in the list.
      * @return The number of nodes.
      */
     int getNodeCount() const;
+
     /**
      * @brief Checks if the list is empty.
      * @return True if the list is empty, false otherwise.
      */
     bool isEmpty() const;
+
     /**
      * @brief Checks if the list contains a node with the specified data.
      * @param data Pointer to the data to search for.
      * @return bool True if the data is found, false otherwise.
      */
     bool contains(typename NodeT::valType *data) const;
+
     /**
      * @brief Prints the data of all nodes in the list to the standard output.
      */
     virtual void printList() const;
+
     /**
      * @brief Returns a string representation of the list, containing the data of all nodes.
      * @return string A string representation of the list.

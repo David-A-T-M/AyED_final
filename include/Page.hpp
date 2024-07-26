@@ -28,35 +28,42 @@ public:
      * @param rDestinationIP The destination IP address for the page.
      */
     Page(int cPageID, int cPageLength, const IPAddress &rOriginIP, const IPAddress &rDestinationIP);
+
     /**
      * @brief Constructor. Initializes a new Page instance with a list of packets.
      * @param packets Pointer to a list of packets to be used to build the page.
      */
     explicit Page(List<Node<Packet>>* packets);
+
     /**
      * @brief Default destructor
      */
     ~Page();
+
     /**
      * @brief Retrieves the page ID.
      * @return The unique identifier of the page.
      */
     int getPageID() const;
+
     /**
      * @brief Retrieves the length of the page in terms of the number of packets.
      * @return The number of packets in the page.
      */
     int getPageLength() const;
+
     /**
      * @brief Retrieves the origin IP address of the page.
      * @return A constant reference to the origin IP address.
      */
     const IPAddress& getOriginIP() const;
+
     /**
      * @brief Retrieves the destination IP address of the page.
      * @return A constant reference to the destination IP address.
      */
     const IPAddress& getDestinationIP() const;
+
     /**
      * @brief Prints the details of the page, including its ID, packets, and length.
      */

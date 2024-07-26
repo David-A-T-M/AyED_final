@@ -40,6 +40,53 @@ Router::~Router() {
     }
 }
 
+void Router::setNextHop(int i, int newA){
+    nextHop[i] = newA;
+}
+
+void Router::setPacketPriority(Page *page) {
+    for (int i = 0; i < page->getNodeCount(); ++i) {
+        auto *packet = page->getDataAtNode(i);
+        setPacketPriority(packet);
+    }
+}
+
+void Router::setPacketPriority(Packet *packet) {
+    packet->setRouterPriority(packetsReceived);
+    packetsReceived++;
+}
+
+List<Node<Queue<Node<Packet>>>>* Router::getAdjRoutersQueues() {
+    return &adjRoutersQueues;
+}
+
+List<Node<Terminal>>* Router::getTerminals() {
+    return &terminals;
+}
+
+List<AdjNode<Router>> *Router::getAdjacencyList(){
+    return &adjacencyList;
+}
+
+int Router::getPacketsReceived() const {
+    return packetsReceived;
+}
+
+int Router::getRouterPos(uint8_t destRouterIP) {
+    int routerPos;
+    for (routerPos = 0; routerPos < routers->getNodeCount(); routerPos++) {
+        uint8_t b = routers->getDataAtNode(routerPos)->getIP().getRouterIP();
+        if(b == destRouterIP) {
+            break;
+        }
+    }
+    return routerPos;
+}
+
+void Router::addHopDest() {
+    nextHop.push_back(0);
+}
+
 void Router::receivePage(Page* page) {
     uint8_t destIP = page->getDestinationIP().getRouterIP();
     if(destIP == ip.getRouterIP()) {
@@ -66,14 +113,6 @@ void Router::receivePage(Page* page) {
 void Router::sendPage(int termPos, Page *page) {
     terminals.getDataAtNode(termPos)->receivePage(page);
     sp = true;
-}
-
-void Router::setNextHop(int i, int newA){
-    nextHop[i] = newA;
-}
-
-List<AdjNode<Router>> *Router::getAdjacencyList(){
-    return &adjacencyList;
 }
 
 void Router::receivePacket(Packet *packet) {
@@ -137,18 +176,6 @@ void Router::sendFromQueues(int bandWith) {
     }
 }
 
-void Router::setPacketPriority(Packet *packet) {
-    packet->setRouterPriority(packetsReceived);
-    packetsReceived++;
-}
-
-void Router::setPacketPriority(Page *page) {
-    for (int i = 0; i < page->getNodeCount(); ++i) {
-        auto *packet = page->getDataAtNode(i);
-        setPacketPriority(packet);
-    }
-}
-
 void Router::checkQueues() {
     for (int i = 0; i < adjRoutersQueues.getNodeCount(); ++i) {             // Iterates through all queues.
         auto *currQueue = adjRoutersQueues.getDataAtNode(i);
@@ -172,17 +199,6 @@ void Router::checkQueues() {
         }
     }
     insertionSort();
-}
-
-int Router::getRouterPos(uint8_t destRouterIP) {
-    int routerPos;
-    for (routerPos = 0; routerPos < routers->getNodeCount(); routerPos++) {
-        uint8_t b = routers->getDataAtNode(routerPos)->getIP().getRouterIP();
-        if(b == destRouterIP) {
-            break;
-        }
-    }
-    return routerPos;
 }
 
 void Router::insertionSort() {
@@ -210,20 +226,19 @@ const IPAddress& Router::getIP() {
     return ip;
 }
 
-string Router::toString() {
-    return "Router: " + to_string(ip.getRouterIP());
+void Router::printRouterName() {
+    cout<<ip.toString();
 }
 
-bool Router::operator==(const Router &router) {
-    return ip == router.ip;
-}
-
-List<Node<Queue<Node<Packet>>>>* Router::getAdjRoutersQueues() {
-    return &adjRoutersQueues;
-}
-
-List<Node<Terminal>>* Router::getTerminals() {
-    return &terminals;
+void Router::printActivity() {
+    if (rp) {
+        cout<<"Has received a page from a terminal"<<endl;
+    }
+    if (sp) {
+        cout<<"Has sent a page to a terminal"<<endl;
+    }
+    rp = false;
+    sp = false;
 }
 
 void Router::printAdjacencyList() {
@@ -231,10 +246,6 @@ void Router::printAdjacencyList() {
     for (int i = 0; i < adjacencyList.getNodeCount(); ++i) {
         cout<<adjacencyList.getNode(i)->toString()<<endl;
     }
-}
-
-void Router::printRouterName() {
-    cout<<ip.toString();
 }
 
 void Router::printTerminals() {
@@ -288,21 +299,10 @@ void Router::printRouterInfo() {
     printIncompletePages();
 }
 
-int Router::getPacketsReceived() const {
-    return packetsReceived;
+string Router::toString() {
+    return "Router: " + to_string(ip.getRouterIP());
 }
 
-void Router::printActivity() {
-    if (rp) {
-        cout<<"Has received a page from a terminal"<<endl;
-    }
-    if (sp) {
-        cout<<"Has sent a page to a terminal"<<endl;
-    }
-    rp = false;
-    sp = false;
-}
-
-void Router::addHopDest() {
-    nextHop.push_back(0);
+bool Router::operator==(const Router &router) {
+    return ip == router.ip;
 }

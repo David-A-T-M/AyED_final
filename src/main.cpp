@@ -7,6 +7,7 @@ void addUnconnectedRouter(Admin *admin);
 void simulate(Admin *admin);
 void sbs(Admin *admin);
 void showSubMenu(Admin *admin);
+void validateInput(int &input, int min = numeric_limits<int>::min(), int max = numeric_limits<int>::max());
 
 int main() {
     srand(time(nullptr));
@@ -15,14 +16,7 @@ int main() {
     do {
         showMenu();
         cout << "Enter an option: ";
-        cin >> option;
-        cout << endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
+        validateInput(option, 1, 6);
         switch (option) {
             case 1:
                 addUnconnectedRouter(admin);
@@ -60,66 +54,31 @@ Admin* initialization() {
     cout << "Press ENTER to start" << endl;
     cin.get();
     auto *admin = new Admin();
-    int BW;
-    do {
-        cout<<"Enter the Bandwidth: ";
-        cin>>BW;
-        cout<<endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
-        break;
-    } while (true);
 
+    int BW;
+    cout << "Set the Bandwidth: ";
+    validateInput(BW, 1);
     admin->setBW(BW);
+    cout << endl;
 
     int terminals;
-    do {
-        cout<<"Enter how many terminals per router: ";
-        cin>>terminals;
-        cout<<endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
-        break;
-    } while (true);
+    cout << "Set the number of terminals per router: ";
+    validateInput(terminals, 1, 256);
     admin->setTerminals(terminals);
+    cout << endl;
+
     int routersQuantity;
-    do {
-        cout<<"Enter the number of routers to create: ";
-        cin>>routersQuantity;
-        cout<<endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
-        break;
-    } while (true);
+    cout << "Set the number of routers: ";
+    validateInput(routersQuantity, 1, 256);
+    cout << endl;
 
     int complexity;
     cout<<"The complexity should be a number between 0 and 20, the higher the number the more complex the network will be"<<endl
-        <<"If the number is out of the range, the network will be created with a complexity of 1"<<endl;
-    do {
-        cout<<"Enter the complexity of the network: ";
-        cin>>complexity;
-        cout<<endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
-        break;
-    } while (true);
+        <<"Enter the complexity: ";
+    validateInput(complexity, 0, 20);
     admin->randomNetwork(routersQuantity, complexity);
+    cout << endl;
+
     cout<<"The network has been created"<<endl;
     admin->getNetwork()->recalculateRoutes();
     admin->printRouters();
@@ -137,29 +96,24 @@ void showMenu() {
 
 void addUnconnectedRouter(Admin *admin) {
     admin->addUnconnectedRouter();
-    cout << "Router added" << endl;
+    cout << "Router created" << endl;
     auto *router = admin->getRouters()->getTailData();
-    cout<<"Choose a router to connect the new router to"<<endl;
-    bool end = false;
+    cout<<"Available routers to connect to: [0-"<<admin->getRouters()->getNodeCount()-2<<"]"<<endl;
     do {
-        cout<<"Available routers to connect to: [0-"<<admin->getRouters()->getNodeCount()-2<<"]"<<endl;
         int option;
-        cin>>option;
-        if (option < 0 || option > admin->getRouters()->getNodeCount()-2) {
-            cout<<"Invalid option"<<endl;
+        cout<<"Choose a router to connect the new router to"<<endl;
+        validateInput(option, 0, admin->getRouters()->getNodeCount()-2);
+        admin->getNetwork()->connectRouters(router, admin->getRouters()->getDataAtNode(option));
+        cout<<"Do you want to add another connection? (y/n)"<<endl;
+        char c;
+        cin>>c;
+        if (c == 'y' || c == 'Y') {
             continue;
         } else {
-            admin->getNetwork()->connectRouters(router, admin->getRouters()->getDataAtNode(option));
-            cout<<"Do you want to add another connection? (y/n)"<<endl;
-            char c;
-            cin>>c;
-            if (c == 'y' || c == 'Y') {
-                continue;
-            } else {
-                end = true;
-            }
+            break;
         }
-    } while (!end);
+    } while (true);
+
     admin->getNetwork()->recalculateRoutes();
 }
 
@@ -170,13 +124,21 @@ void simulate(Admin *admin) {
         admin->sendFromQueues();
         admin->checkCounter();
         admin->printRouters();
-        cout<<"Do you want to simulate next iteration? (y/n)"<<endl;
         char c;
-        cin>>c;
-        if (c == 'y' || c == 'Y') {
-            continue;
-        } else {
-            end = true;
+        bool validInput = false;
+
+        while (!validInput) {
+            cout << "Do you want to simulate next iteration? (y/n)" << endl;
+            cin >> c;
+            if (c == 'y' || c == 'Y') {
+                validInput = true;
+                continue;
+            } else if (c == 'n' || c == 'N') {
+                validInput = true;
+                end = true;
+            } else {
+                cout << "Invalid option" << endl;
+            }
         }
     } while (!end);
 }
@@ -190,6 +152,7 @@ void sbs(Admin *admin) {
         cin>>c;
         if (c != 'y' && c != 'Y')
             break;
+
         admin->sendFromQueues();
         admin->printRouters();
         cout<<"Check for recalculation? (y/n)"<<endl;
@@ -224,36 +187,31 @@ void showSubMenu(Admin *admin) {
         cout << "Enter an option: ";
         cin >> subOption;
         cout << endl;
-        if (cin.fail()) {
-            cout << "Invalid option" << endl;
-            cin.clear(); // clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-            continue;
-        }
+        validateInput(subOption, 1, 5);
         switch (subOption) {
             case 1:
                 int bw;
                 cout << "Enter the new Bandwidth: ";
-                cin >> bw;
+                validateInput(bw, 1);
                 admin->setBW(bw);
                 break;
             case 2:
                 int pl;
                 cout << "Enter the new maximum page length: " << endl;
-                cin >> pl;
+                validateInput(pl, 1);
                 admin->setMaxPageLength(pl);
                 break;
             case 3:
                 int tpr;
                 cout << "Enter the new number of terminals per router (should be higher than the current): " << endl;
-                cin >> tpr;
+                validateInput(tpr);
                 admin->setTerminals(tpr);
                 admin->setRoutersTerminals();
                 break;
             case 4:
                 int prob;
                 cout << "Enter the new probability for a Terminal to send a page (0-100): " << endl;
-                cin >> prob;
+                validateInput(prob, 0, 100);
                 admin->setProbability(prob);
                 break;
             case 5:
@@ -264,4 +222,19 @@ void showSubMenu(Admin *admin) {
                 break;
         }
     } while (subOption != 5);
+}
+
+void validateInput(int &input, int min, int max) {
+    while (true) {
+        cin >> input;
+        if (cin.fail()) {
+            cout << "Invalid input: ";
+            cin.clear(); // clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+        } else if (input < min || input > max) {
+            cout << "Input out of range (" << min << " - " << max << "). Please enter again: ";
+        } else {
+            break;
+        }
+    }
 }

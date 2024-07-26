@@ -29,50 +29,60 @@ public:
      * @param originIP Reference to the origin terminal IP.
      */
     Packet(int pageID, int pagePosition, int pageLength, int routerPriority, const IPAddress &destinationIP, const IPAddress &originIP);
+
     /**
      * @brief Default Destructor.
      */
     ~Packet();
+
     /**
      * @brief Sets the router priority.
      * @param routPri Router priority.
      */
     void setRouterPriority(int routPri);
+
     /**
      * @brief Gets the page ID.
      * @return Page ID.
      */
     int getPageID() const;
+
     /**
      * @brief Gets the page position.
      * @return Page position.
      */
     int getPagePosition() const;
+
     /**
      * @brief Gets the length of the page the packet belongs to.
      * @return Page length.
      */
     int getPageLength() const;
+
     /**
      * @brief Gets the router priority it got assigned the last time it was received by a router.
      * @return Router priority
      */
     int getRouterPriority() const;
+
     /**
      * @brief Gets the IP of it's destination terminal.
      * @return Destination terminal IP.
      */
     const IPAddress& getDestinationIP() const;
+
     /**
      * @brief Gets the IP of the terminal that originated the packet.
      * @return Origin terminal IP.
      */
     const IPAddress& getOriginIP() const;
+
     /**
      * @brief Gets a string with it's position in the page.
      * @return "Packet xx".
      */
     string toString() const;
+
     /**
      * @brief Compares two packets.
      * @param packet Packet to compare with.

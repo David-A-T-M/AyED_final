@@ -18,32 +18,38 @@ public:
      * @brief Default constructor.
      */
     Queue();
+
     /**
      * @brief Default destructor.
      */
     ~Queue();
+
     /**
      * @brief Enqueues a new node with the specified data
      *        The data type must match the type that NodeT can store.
      * @param data Pointer to the data to be stored in the new node.
      */
     void enqueue(typename NodeT::valType *data);
+
     /**
      * @brief Dequeues the next element from the queue.
      *        If the queue is empty, it prints a message and does nothing.
      */
     void dequeue();
+
     /**
      * @brief Enqueues all the data from a list into the queue, maintaining the order.
      *        If the list is empty, it does nothing. Does not modify the original list.
      * @param list Pointer to the list to be enqueued.
      */
     void enqueueList(List<NodeT>* list);
+
     /**
      * @brief Prints the contents of the queue from front to back.
      *        This method overrides the printList method from the List class.
      */
     void printList() const override;
+
     /**
      * @brief Returns a string representation of the queue.
      * @return A string representation of the queue.
