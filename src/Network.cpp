@@ -1,4 +1,4 @@
-#include "Network.hpp"
+#include "..\include\Network.hpp"
 
 Network::Network() : routers(), adjLists() {}
 

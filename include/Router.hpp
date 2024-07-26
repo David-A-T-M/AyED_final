@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Terminal.hpp"
-#include "Packet.hpp"
-#include "AdjNode.hpp"
-#include "Queue.hpp"
+#include "..\include\Terminal.hpp"
+#include "..\include\Packet.hpp"
+#include "..\include\AdjNode.hpp"
+#include "..\include\Queue.hpp"
 #include <vector>
 
 /**

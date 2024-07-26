@@ -20,3 +20,14 @@ target_link_libraries(AyEdD_Routers PRIVATE $<TARGET_OBJECTS:AyEdD_Routers_ObjLi
 
 # Include headers
 target_include_directories(AyEdD_Routers PRIVATE ../include)
+
+# Ruta donde se encuentran las bibliotecas necesarias (ajusta según tu instalación de MinGW)
+set(MINGW_BIN_DIR "C:/MinGW/bin")
+
+# Copiar las bibliotecas necesarias al directorio de salida
+add_custom_command(TARGET AyEdD_Routers POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${MINGW_BIN_DIR}/libgcc_s_dw2-1.dll
+        $<TARGET_FILE_DIR:AyEdD_Routers>
+        COMMAND_EXPAND_LISTS
+        COMMENT "Copying libgcc_s_dw2-1.dll to output directory")

@@ -84,5 +84,5 @@ TEST_F(NodeTest, OperatorEqual) {
 
 // toString Test
 TEST_F(NodeTest, ToString) {
-    EXPECT_EQ(node0->toString(), "Packet 1");
+    EXPECT_EQ(node0->toString(), "170000000001-1");
 }
