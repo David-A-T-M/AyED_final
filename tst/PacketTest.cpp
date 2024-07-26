@@ -35,7 +35,7 @@ TEST_F(PacketTest, Setters) {
 
 // toString test
 TEST_F(PacketTest, ToString) {
-    EXPECT_EQ(packet1.toString(), "Packet 2");
+    EXPECT_EQ(packet1.toString(), "170000000001-2");
 }
 
 // Equal operator test

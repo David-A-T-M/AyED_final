@@ -1,4 +1,4 @@
-#include "IPAddress.hpp"
+#include "..\include\IPAddress.hpp"
 
 IPAddress::IPAddress() : routerIP(0), terminalIP(0), Router(true) {}
 

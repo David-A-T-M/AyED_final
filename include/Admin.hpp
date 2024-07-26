@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Network.hpp"
+#include "..\include\Network.hpp"
 /**
  * @class Admin
  * @brief Manages the network and the routers.

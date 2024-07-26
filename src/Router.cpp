@@ -1,4 +1,4 @@
-#include "Router.hpp"
+#include "..\include\Router.hpp"
 
 Router::Router(List<Node<Router>> *routers, int modemIP, int numOfTerminals, int numOfRouters)
     : ip(modemIP),

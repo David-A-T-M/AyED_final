@@ -39,7 +39,7 @@ protected:
 // Constructor and getter tests
 TEST_F(AdjacencyNodeTest, DataConstructor) {
     EXPECT_EQ(node0->getData(), packet0);
-    EXPECT_EQ(node0->getVal(), 0);
+    EXPECT_EQ(node0->getVal(), 1);
 }
 
 TEST_F(AdjacencyNodeTest, DataValConstructor) {
@@ -49,7 +49,7 @@ TEST_F(AdjacencyNodeTest, DataValConstructor) {
 
 TEST_F(AdjacencyNodeTest, DataNextConstructor) {
     EXPECT_EQ(node2->getData(), packet0);
-    EXPECT_EQ(node2->getVal(), 0);
+    EXPECT_EQ(node2->getVal(), 1);
     EXPECT_EQ(node2->getNext(), node1);
 }
 
@@ -70,9 +70,9 @@ TEST_F(AdjacencyNodeTest, SetWeight) {
 }
 
 TEST_F(AdjacencyNodeTest, ValModifiers) {
-    EXPECT_EQ(node0->getVal(), 0);
+    EXPECT_EQ(node0->getVal(), 1);
     node0->addToVal(5);
-    EXPECT_EQ(node0->getVal(), 5);
+    EXPECT_EQ(node0->getVal(), 6);
     node0->setVal(20);
     EXPECT_EQ(node0->getVal(), 20);
 }

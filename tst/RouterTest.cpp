@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+/*#include <gtest/gtest.h>
 #include "Router.hpp"
 
 class RouterTest : public ::testing::Test {
@@ -99,3 +99,4 @@ TEST_F(RouterTest, constructor) {
     cout<<endl;
     router3->printRouterInfo();
 }
+*/

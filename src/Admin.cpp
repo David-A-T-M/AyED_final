@@ -1,4 +1,4 @@
-#include "Admin.hpp"
+#include "..\include\Admin.hpp"
 
 Admin::Admin() : network(nullptr), routers(nullptr) {}
 
@@ -82,7 +82,7 @@ void Admin::addRandomlyConnectedRouter() {
     }
     int routerAmount = routers->getNodeCount();
     for (int i = -1; i < rand() % routerAmount; i++) {
-        auto *router2 = routers->getDataAtNode(rand() % routerAmount);
+        auto *router2 = routers->getDataAtNode(rand() % (routerAmount-1));
         network->connectRouters(router, router2);
     }
     cout<<"Router added and connected to "<<router->getAdjacencyList()->getNodeCount()<<" random routers"<<endl;

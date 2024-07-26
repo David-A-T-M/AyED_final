@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Router.hpp"
-#include "AdjNode.hpp"
+#include "..\include\Router.hpp"
+#include "..\include\AdjNode.hpp"
 #include <vector>
 
 #define INF 9999

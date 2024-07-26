@@ -343,5 +343,5 @@ TEST_F(ListTest, PrintNonEmptyListPrintsData) {
     testing::internal::CaptureStdout();
     pListWith3->printList();
     std::string output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "Start of list\nPacket 1\nPacket 2\nPacket 2\nEnd of list\n");
+    ASSERT_EQ(output, "Start of list\n170000000001-1\n170000000001-2\n170000000001-2\nEnd of list\n");
 }

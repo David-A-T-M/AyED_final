@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Packet.hpp"
-#include "List.hpp"
-#include "Node.hpp"
+#include "..\include\Packet.hpp"
+#include "..\include\List.hpp"
+#include "..\include\Node.hpp"
 
 using namespace std;
 

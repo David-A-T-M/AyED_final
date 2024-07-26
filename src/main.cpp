@@ -1,4 +1,4 @@
-#include "Admin.hpp"
+#include "..\include\Admin.hpp"
 #include <limits>
 
 Admin* initialization();
@@ -17,6 +17,7 @@ int main() {
         showMenu();
         cout << "Enter an option: ";
         validateInput(option, 1, 6);
+        cout << endl;
         switch (option) {
             case 1:
                 addUnconnectedRouter(admin);
@@ -185,7 +186,6 @@ void showSubMenu(Admin *admin) {
         cout << "4. Set the Probability to send a page" << endl;
         cout << "5. Back to Main Menu" << endl;
         cout << "Enter an option: ";
-        cin >> subOption;
         cout << endl;
         validateInput(subOption, 1, 5);
         switch (subOption) {
@@ -194,12 +194,14 @@ void showSubMenu(Admin *admin) {
                 cout << "Enter the new Bandwidth: ";
                 validateInput(bw, 1);
                 admin->setBW(bw);
+                cout<<endl;
                 break;
             case 2:
                 int pl;
                 cout << "Enter the new maximum page length: " << endl;
                 validateInput(pl, 1);
                 admin->setMaxPageLength(pl);
+                cout<<endl;
                 break;
             case 3:
                 int tpr;
@@ -207,12 +209,14 @@ void showSubMenu(Admin *admin) {
                 validateInput(tpr);
                 admin->setTerminals(tpr);
                 admin->setRoutersTerminals();
+                cout<<endl;
                 break;
             case 4:
                 int prob;
                 cout << "Enter the new probability for a Terminal to send a page (0-100): " << endl;
                 validateInput(prob, 0, 100);
                 admin->setProbability(prob);
+                cout<<endl;
                 break;
             case 5:
                 cout << "Returning to main menu..." << endl;
@@ -233,7 +237,9 @@ void validateInput(int &input, int min, int max) {
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
         } else if (input < min || input > max) {
             cout << "Input out of range (" << min << " - " << max << "). Please enter again: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         } else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear the input buffer
             break;
         }
     }

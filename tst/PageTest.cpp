@@ -54,12 +54,6 @@ TEST_F(PageTest, Print) {
     testing::internal::CaptureStdout();
     page0->print();
     std::string output = testing::internal::GetCapturedStdout();
-    std::string expectedOutput = "Page ID: 1\n"
-                                 "Packet 0\n"
-                                 "Packet 1\n"
-                                 "Packet 2\n"
-                                 "Packet 3\n"
-                                 "Packet 4\n"
-                                 "Page length: 5\n\n";
+    std::string expectedOutput = "Page ID: 1\n160000000001-0\n160000000001-1\n160000000001-2\n160000000001-3\n160000000001-4\nPage length: 5\n\n";
     EXPECT_EQ(output, expectedOutput);
 }
